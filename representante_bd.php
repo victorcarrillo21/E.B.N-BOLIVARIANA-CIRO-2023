@@ -213,8 +213,13 @@
 
 <?php
         require_once "basedata/basedata1.php";
-        
+
+        $resultado="";
+
+
         $representante="SELECT * FROM representante";
+
+
 ?>
                 <div class="container">
   <div class="row">
@@ -242,7 +247,7 @@
         </thead>
         <tbody>
             
-          <?php $resultado = mysqli_query($mysqli, $representante);
+          <?php $resultado = mysqli_query($conn, $representante);
 
           while($row=mysqli_fetch_assoc($resultado)){ ?>
           <tr>

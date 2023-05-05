@@ -245,8 +245,11 @@ $parroquias = $conn_pdo->query("SELECT id_parroquia ,id_municipio, parroquia FRO
 $message = '';
 
 // Verificación del envío de formulario
-if (!empty($_POST['enviar'])) 
+if (($_POST['enviar'])) { 
     // Obtención de valores de formulario
+    var_dump($_POST{"nombre"});die();
+   
+
     $nombre = isset($_POST['nombre']) ? $_POST['nombre'] : "";
     $apellido = isset($_POST['apellido']) ? $_POST['apellido'] : "";
     $cedula = isset($_POST['cedula']) ? $_POST['cedula'] : "";
@@ -262,8 +265,8 @@ if (!empty($_POST['enviar']))
     // LO NUEVO
     $id_ciudad = "";
     $id_municipio = "";
-    $id_parroquia = "";
-
+    $id_parroquia = ""; 
+    
     if(isset($_POST['ciudad'])) {
         $id_ciudad = $_POST['ciudad'];
         //Resto del código
@@ -278,11 +281,11 @@ if (!empty($_POST['enviar']))
         $id_parroquia = $_POST['parroquia'];
         //Resto del código
       }
-       
-
-/// Consulta preparada con PDO
-$sql = "INSERT INTO representante (nombre, apellido, cedula, parentesco, profesion, direccion, direccion_tra, telefono, telefono_tra, vive, telefono_opc, id_estado, id_ciudad, id_municipio, id_parroquia) VALUES (:nombre, :apellido, :cedula, :parentesco, :profesion, :direccion, :direccion_tra, :telefono, :telefono_tra, :vive, :telefono_opc, :id_estado, :id_ciudad, :id_municipio, :id_parroquia)";
-$stmt = $conn_pdo->prepare($sql);
+    }
+    
+    // Consulta preparada con PDO
+    $sql = "INSERT INTO representante (nombre, apellido, cedula, parentesco, profesion, direccion, direccion_tra, telefono, telefono_tra, vive, telefono_opc, id_estado, id_ciudad, id_municipio, id_parroquia) VALUES (:nombre, :apellido, :cedula, :parentesco, :profesion, :direccion, :direccion_tra, :telefono, :telefono_tra, :vive, :telefono_opc, :id_estado, :id_ciudad, :id_municipio, :id_parroquia)";
+    $stmt = $conn_pdo->prepare($sql);
 
 
 // Asignar valores a los parámetros de la consulta preparada
@@ -306,28 +309,30 @@ $stmt->bindParam(':id_parroquia', $id_parroquia);
 if (empty($_POST['nombre'])) {
     $message = "El campo 'nombre' es obligatorio. Por favor, complete el campo y vuelva a intentarlo.";
 } else {
-    // Preparar la consulta SQL UPDATE
-    $sql = "UPDATE representante SET nombre = :nombre, apellido = :apellido, cedula = :cedula, profesion = :profesion, direccion = :direccion, direccion_tra = :direccion_tra, telefono = :telefono, telefono_tra = :telefono_tra, vive = :vive, telefono_opc = :telefono_opc, id_estado = :id_estado, id_ciudad = :id_ciudad, id_municipio = :id_municipio, id_parroquia = :id_parroquia WHERE id = :id_representante";
+    // Consulta SQL UPDATE
+$sql = "UPDATE representante SET nombre = :nombre, apellido = :apellido, cedula = :cedula, profesion = :profesion, direccion = :direccion, direccion_tra = :direccion_tra, telefono = :telefono, telefono_tra = :telefono_tra, vive = :vive, telefono_opc = :telefono_opc, id_estado = :id_estado, id_ciudad = :id_ciudad, id_municipio = :id_municipio, id_parroquia = :id_parroquia WHERE id = :id_representante";
 
-    $stmt = $conn_pdo->prepare($sql);
+// Preparar la consulta preparada
+$stmt = $conn_pdo->prepare($sql);
 
-    // Vincular los valores del formulario a los marcadores de posición en la consulta SQL
-    $stmt->bindParam(':nombre', $_POST['nombre']);
-    $stmt->bindParam(':apellido', $_POST['apellido']);
-    $stmt->bindParam(':cedula', $_POST['cedula']);
-    $stmt->bindParam(':parentesco',$_POST['parentesco']);
-    $stmt->bindParam(':profesion', $_POST['profesion']);
-    $stmt->bindParam(':direccion', $_POST['direccion']);
-    $stmt->bindParam(':direccion_tra', $_POST['direccion_tra']);
-    $stmt->bindParam(':telefono', $_POST['telefono']);
-    $stmt->bindParam(':telefono_tra', $_POST['telefono_tra']);
-    $stmt->bindParam(':vive', $_POST['vive']);
-    $stmt->bindParam(':telefono_opc', $_POST['telefono_opc']);
-    $stmt->bindParam(':id_estado', $_POST['estado']);
-    $stmt->bindParam(':id_ciudad', $_POST['ciudad']);
-    $stmt->bindParam(':id_municipio', $_POST['municipio']);
-    $stmt->bindParam(':id_parroquia', $_POST['parroquia']);
-    $stmt->bindParam(':id_representante', $id_representante);
+// Vincular los valores del formulario a los marcadores de posición en la consulta SQL
+$stmt->bindParam(':nombre', $_POST['nombre']);
+$stmt->bindParam(':apellido', $_POST['apellido']);
+$stmt->bindParam(':cedula', $_POST['cedula']);
+$stmt->bindParam(':parentesco',$_POST['parentesco']);
+$stmt->bindParam(':profesion', $_POST['profesion']);
+$stmt->bindParam(':direccion', $_POST['direccion']);
+$stmt->bindParam(':direccion_tra', $_POST['direccion_tra']);
+$stmt->bindParam(':telefono', $_POST['telefono']);
+$stmt->bindParam(':telefono_tra', $_POST['telefono_tra']);
+$stmt->bindParam(':vive', $_POST['vive']);
+$stmt->bindParam(':telefono_opc', $_POST['telefono_opc']);
+$stmt->bindParam(':id_estado', $_POST['estado']);
+$stmt->bindParam(':id_ciudad', $_POST['ciudad']);
+$stmt->bindParam(':id_municipio', $_POST['municipio']);
+$stmt->bindParam(':id_parroquia', $_POST['parroquia']);
+$stmt->bindParam(':id_representante', $id_representante);
+
 
     // Ejecutar la consulta preparada
     if ($stmt->execute()) {
@@ -577,6 +582,12 @@ if (!$stmt) {
 })  
 </script>
 
+
+
+<?php $nombrev="Victor";
+?>
+
+
 <!-- <script>
     $(document).ready(function() {
         recargarListaCiudad();
@@ -628,10 +639,245 @@ if (!$stmt) {
 
                         <!--EDITAR,GUARDAR Y LIMPIAR--> 
  <div class="d-flex justify-content-center">
-    <input class="btn btn-danger" type="submit" value="GUARDAR DATOS" name="enviar" id="enviar">
+<!--    <input class="btn btn-danger" type="submit" value="GUARDAR DATOS" name="enviar" id="enviar">-->
+<button class="btn btn-danger" type="submit" value="enviar" name="enviar" id="enviar">Guardar Datos</button>
 </div>
 
 
+
+
+
+
+ 
+
+<button type="button" class="mt-5 mx-5 btn btn-primary" data-bs-toggle="modal" data-bs-target="#miModal">Activar Modal</button>
+
+<div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitle">Bienvenido a mi sitio</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <button type="button" class="btn btn-primary" onclick="mostrarImagen()">Button</button>
+        <p>
+        <!-- Input de nombre -->
+<div class="form-group">
+  <label for="nombre">Nombre:</label>
+  <input type="text" name="nombre" value="<?php echo $nombrev; ?>" class="form-control" maxlength="50" required readonly>
+</div>
+
+
+<!-- Input de apellido -->
+<div class="form-group">
+  <label for="apellido">Apellido:</label>
+  <input type="text" name="apellido" class="form-control" maxlength="50" required readonly>
+</div>
+
+<!-- Input de cedula -->
+<div class="form-group">
+  <label for="cedula">CEDULA:</label>
+  <input type="number" name="cedula" class="form-control" maxlength="20" required readonly>
+</div>
+
+<!-- Input de parentesco -->
+<div class="form-group">
+  <label for="parentesco">Parentesco:</label>
+  <select name="parentesco" class="form-control" required readonly>
+    <option value="opcion1">Padre</option>
+    <option value="opcion2" selected>Madre (seleccionada por defecto)</option>
+    <option value="opcion3">Otros</option>
+  </select>
+</div>
+
+<!-- Input de profesion -->
+<div class="form-group">
+  <label for="profesion">Profesión:</label>
+  <input type="text" name="profesion" class="form-control" maxlength="100" required readonly>
+</div>
+
+<!-- Input de direccion -->
+<div class="form-group">
+  <label for="direccion">Dirección:</label>
+  <input type="text" name="direccion" class="form-control" maxlength="100" required readonly>
+</div>
+
+<!-- Input de direccion_tra -->
+<div class="form-group">
+  <label for="direccion_tra">Dirección del Trabajo:</label>
+  <input type="text" name="direccion_tra" class="form-control" maxlength="100" required readonly>
+</div>
+
+<!-- Input de telefono -->
+<div class="form-group">
+  <label for="telefono">Telefono:</label>
+  <input type="number" name="telefono" class="form-control" required readonly>
+</div>
+
+<!-- Input de telefono_tra -->
+<div class="form-group">
+  <label for="telefono_tra">Telefono del Trabajo:</label>
+  <input type="number" name="telefono_tra" class="form-control" required readonly>
+</div>
+
+<!-- Input de telefono_opc -->
+<div class="form-group">
+  <label for="telefono_opc">Telefono Opcional:</label>
+  <input type="number" name="telefono_opc" class="form-control" readonly>
+</div>
+
+<!-- Input de vive -->
+<div class="form-group">
+  <label for="vive">¿Vive?</label>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="vive" id="viveSi" value="si" checked readonly>
+    <label class="form-check-label" for="viveSi">
+      Sí
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="vive" id="viveNo" value="no" readonly>
+    <label class="form-check-label" for="viveNo">
+      No
+    </label>
+  </div>
+</div>
+
+<!-- Input de estado -->
+<div class="form-group">
+  <label for="estado">Estado:</label>
+  <select name="estado" class="form-control" required readonly>
+    <option value="opcion1">Estado 1</option>
+    <option value="opcion2" selected>Estado 2 (seleccionada por defecto)</option>
+    <option value="opcion3">Estado 3</option>
+  </select>
+</div>
+
+<!-- Input de ciudad_select -->
+<div class="form-group">
+  <label for="ciudad_select">Ciudad:</label>
+  <select name="ciudad_select" class="form-control" required readonly>
+    <option value="opcion1">Ciudad 1</option>
+    <option value="opcion2" selected>Ciudad 2 (seleccionada por defecto)</option>
+    <option value="opcion3">Ciudad 3</option>
+  </select>
+</div>
+
+<!-- Input de municipio_select -->
+<div class="form-group">
+  <label for="municipio_select">Municipio:</label>
+  <select name="municipio_select" class="form-control" required readonly>
+    <option value="opcion1">Municipio 1</option>
+    <option value="opcion2" selected>Municipio 2 (seleccionada por defecto)</option>
+    <option value="opcion3">Municipio 3</option>
+  </select>
+</div>
+
+<!-- Input de parroquia_select -->
+<div class="form-group">
+  <label for="parroquia_select">Parroquia:</label>
+  <select name="parroquia_select" class="form-control" required readonly>
+    <option value="opcion1">Parroquia 1</option>
+    <option value="opcion2" selected>Parroquia 2 (seleccionada por defecto)</option>
+    <option value="opcion3">Parroquia 3</option>
+  </select>
+</div></p>
+        <img src="ruta/de/la/imagen.jpg" alt="Imagen descriptiva" style="display: none;" aria-label="Imagen descriptiva">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-success" id="botonAceptar" onclick="mostrarImagen()" aria-label="Aceptar">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--Pruebas 
+
+c
+<script>
+  function mostrarImagen() {
+    var imagen = document.querySelector('#miModal .modal-body img');
+    imagen.style.display = "block";
+    var botonAceptar = document.querySelector('#botonAceptar');
+    botonAceptar.disabled = true;
+    botonAceptar.innerText = "Imagen mostrada";
+  }
+</script>-->
+
+
+
+<!--<form id="miFormulario">
+  <div class="mb-3">
+    <label for="nombre" class="form-label">Nombre</label>
+    <input type="text" class="form-control" id="nombre" name="nombre">
+  </div>
+  <div class="mb-3">
+    <label for="correo" class="form-label">Correo electrónico</label>
+    <input type="email" class="form-control" id="correo" name="correo">
+  </div>
+  <button type="submit" class="btn btn-primary">Enviar</button>
+</form>
+
+<div class="modal fade" id="modalRevisar" tabindex="-1" aria-labelledby="modalRevisarTitulo" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalRevisarTitulo">Revisa tus datos</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="nombreRevisar" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombreRevisar" readonly>
+          </div>
+          <div class="mb-3">
+            <label for="correoRevisar" class="form-label">Correo electrónico</label>
+            <input type="email" class="form-control" id="correoRevisar" readonly>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="enviarFormulario()">Enviar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const miFormulario = document.querySelector('#miFormulario');
+  const nombreRevisar = document.querySelector('#nombreRevisar');
+  const correoRevisar = document.querySelector('#correoRevisar');
+
+  miFormulario.addEventListener('submit', function(event) {
+    event.preventDefault(); // Evita el envío del formulario
+    // Obtener los valores de los campos del formulario
+    const nombre = document.querySelector('#nombre').value;
+    const correo = document.querySelector('#correo').value;
+    // Actualizar los campos del formulario de revisión
+    nombreRevisar.value = nombre;
+    correoRevisar.value = correo;
+    // Colocar los inputs en modo "read-only"
+    document.querySelectorAll('#modalRevisar input').forEach(function(input) {
+      input.setAttribute('readonly', '');
+    });
+    // Mostrar el modal de revisión
+    const modalRevisar = new bootstrap.Modal(document.querySelector('#modalRevisar'));
+    modalRevisar.show();
+  });
+
+  function enviarFormulario() {
+    // Enviar el formulario
+    miFormulario.submit();
+    // Limpiar los campos del formulario
+    miFormulario.reset();
+  }
+</script>
+-->
 
 </form>
 </div>
@@ -685,6 +931,8 @@ if (!$stmt) {
     </div>
 
     <!-- Bootstrap core JavaScript-->
+   <!--Bootstrap 3-5-2023--> <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
