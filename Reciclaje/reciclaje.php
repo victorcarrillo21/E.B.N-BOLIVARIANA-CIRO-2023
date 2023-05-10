@@ -1,4 +1,4 @@
-<?php
+<?php/*
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -22,15 +22,27 @@ echo "La versión del servidor MySQL es: " . mysqli_get_server_info($conn);
 $sql = "SELECT * FROM estados";
 $resultado = mysqli_query($conn, $sql);
 
-// Conexión con PDO
-try {
-    $conn_pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    // Establecer el modo de error de PDO a excepción
-    $conn_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo "Conexión exitosa";
-} catch(PDOException $e) {
-    echo "Error de conexión: " . $e->getMessage();
-}
+// Conexión con 
+
+
+
+    try {
+        $conn_pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        // Establecer el modo de error de PDO a excepción
+        $conn_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        echo "Conexión exitosa";
+
+        
+
+    } catch(PDOException $e) {
+        echo "Error de conexión: " . $e->getMessage();
+    }
+    
+
+
+
+ 
+
 
 // Consulta con PDO
 $stmt = $conn_pdo->query("SELECT * FROM estados");
@@ -46,8 +58,7 @@ $GLOBALS['conn'] = $conn;
 
 
 // Cerrar conexiones
-mysqli_close($conn);
+//mysqli_close($conn);
+return $conn_pdo;
 $conn_pdo = null;
 ?>
- 
-

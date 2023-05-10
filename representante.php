@@ -231,361 +231,242 @@
 
                 <!-- Begin Page Content -->
                 <?php 
+ob_start(); // Iniciar el buffer de salida
 
-require_once 'basedata/basedata1.php';
-//require_once 'basedata/basedata2.php';
- 
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "basededatos_ciroo";
 
+try {
+    $conn_pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $conn_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-// Consultas a la base de datos
-$estados = $conn_pdo->query("SELECT id_estado, estado FROM estados"); 
-$ciudades = $conn_pdo->query("SELECT id_ciudad, id_estado, ciudad FROM ciudades"); 
-$municipios = $conn_pdo->query("SELECT id_municipio, id_estado, municipio FROM municipios"); 
-$parroquias = $conn_pdo->query("SELECT id_parroquia ,id_municipio, parroquia FROM parroquias");
-$message = '';
+    // Obtener datos para los select
+    $estados = $conn_pdo->query("SELECT id_estado, estado FROM estados"); 
+    $ciudades = $conn_pdo->query("SELECT id_ciudad, id_estado, ciudad FROM ciudades"); 
+    $municipios = $conn_pdo->query("SELECT id_municipio, id_estado, municipio FROM municipios"); 
+    $parroquias = $conn_pdo->query("SELECT id_parroquia ,id_municipio, parroquia FROM parroquias");
 
-// Verificación del envío de formulario
-if (($_POST['enviar'])) { 
-    // Obtención de valores de formulario
-    var_dump($_POST{"nombre"});die();
-   
+    // Verificación del envío de formulario
+    if (!empty($_POST)) {
+        $message = '';
 
-    $nombre = isset($_POST['nombre']) ? $_POST['nombre'] : "";
-    $apellido = isset($_POST['apellido']) ? $_POST['apellido'] : "";
-    $cedula = isset($_POST['cedula']) ? $_POST['cedula'] : "";
-    $parentesco = isset($_POST['parentesco']) ? $_POST['parentesco'] : "";
-    $profesion = isset($_POST['profesion']) ? $_POST['profesion'] : "";
-    $direccion = isset($_POST['direccion']) ? $_POST['direccion'] : "";
-    $direccion_tra = isset($_POST['direccion_tra']) ? $_POST['direccion_tra'] : "";
-    $telefono = isset($_POST['telefono']) ? $_POST['telefono'] : "";
-    $telefono_tra = isset($_POST['telefono_tra']) ? $_POST['telefono_tra'] : "";
-    $vive = isset($_POST['si']) ? 'si' : 'no';
-    $telefono_opc = isset($_POST['telefono_opc']) ? $_POST['telefono_opc'] : "";
-    $id_estado = isset($_POST['estado']) ? $_POST['estado'] : "";
-    // LO NUEVO
-    $id_ciudad = "";
-    $id_municipio = "";
-    $id_parroquia = ""; 
-    
-    if(isset($_POST['ciudad'])) {
-        $id_ciudad = $_POST['ciudad'];
-        //Resto del código
-      }
-       
-        if(isset($_POST['municipio'])) {
-            $id_municipio = $_POST['municipio'];
-            //Resto del código
-          }
-      
-      if(isset($_POST['parroquia'])) {
-        $id_parroquia = $_POST['parroquia'];
-        //Resto del código
-      }
+        // Validar datos del formulario
+        if (empty($_POST['nombre'])) {
+            $message = "El campo 'nombre' es obligatorio. Por favor, complete el campo y vuelva a intentarlo.";
+        } else {
+            // Preparar consulta SQL
+            $sql = "INSERT INTO representante (nombre, apellido, cedula, parentesco, profesion, direccion, direccion_tra, telefono, telefono_tra, vive, telefono_opc, id_estado, id_ciudad, id_municipio, id_parroquia) VALUES (:nombre, :apellido, :cedula, :parentesco, :profesion, :direccion, :direccion_tra, :telefono, :telefono_tra, :vive, :telefono_opc, :id_estado, :id_ciudad, :id_municipio, :id_parroquia)";
+
+            // Preparar consulta preparada
+            $stmt = $conn_pdo->prepare($sql);
+
+            // Obtención de valores de formulario
+            $nombre = isset($_POST['nombre']) ? $_POST['nombre'] : "";
+            $apellido = isset($_POST['apellido']) ? $_POST['apellido'] : "";
+            $cedula = isset($_POST['cedula']) ? $_POST['cedula'] : "";
+            $parentesco = isset($_POST['parentesco']) ? $_POST['parentesco'] : "";
+            $profesion = isset($_POST['profesion']) ? $_POST['profesion'] : "";
+            $direccion = isset($_POST['direccion']) ? $_POST['direccion'] : "";
+            $direccion_tra = isset($_POST['direccion_tra']) ? $_POST['direccion_tra'] : "";
+            $telefono = isset($_POST['telefono']) ? $_POST['telefono'] : "";
+            $telefono_tra = isset($_POST['telefono_tra']) ? $_POST['telefono_tra'] : "";
+            $vive = isset($_POST['vive']) ? $_POST['vive'] : "";
+            $telefono_opc = isset($_POST['telefono_opc']) ? $_POST['telefono_opc'] : "";
+            $id_estado = isset($_POST['estado']) ? $_POST['estado'] : "";
+            $id_ciudad = isset($_POST['ciudad']) ? $_POST['ciudad'] : "";
+            $id_municipio = isset($_POST['municipio']) ? $_POST['municipio'] : "";
+            $id_parroquia = isset($_POST['parroquia']) ? $_POST['parroquia'] : "";
+
+            // Vincular parámetros
+            $stmt->bindParam(':nombre', $nombre);
+            $stmt->bindParam(':apellido', $apellido);
+            $stmt->bindParam(':cedula', $cedula);
+            $stmt->bindParam(':parentesco', $parentesco);
+            $stmt->bindParam(':profesion', $profesion);
+            $stmt->bindParam(':direccion', $direccion);
+            $stmt->bindParam(':direccion_tra', $direccion_tra);
+            $stmt->bindParam(':telefono', $telefono);
+            $stmt->bindParam(':telefono_tra', $telefono_tra);
+            $stmt->bindParam(':vive', $vive);
+            $stmt->bindParam(':telefono_opc', $telefono_opc);
+            $stmt->bindParam(':id_estado', $id_estado);
+            $stmt->bindParam(':id_ciudad', $id_ciudad);
+            $stmt->bindParam(':id_municipio', $id_municipio);
+            $stmt->bindParam(':id_parroquia', $id_parroquia);
+
+            // Ejecutar consulta preparada
+            if ($stmt->execute()) {
+                $message = "Representante registrado exitosamente.";
+            } else {
+                $message = "Error al registrar al representante. Por favor, inténtelo de nuevo.";
+            }
+        }
     }
-    
-    // Consulta preparada con PDO
-    $sql = "INSERT INTO representante (nombre, apellido, cedula, parentesco, profesion, direccion, direccion_tra, telefono, telefono_tra, vive, telefono_opc, id_estado, id_ciudad, id_municipio, id_parroquia) VALUES (:nombre, :apellido, :cedula, :parentesco, :profesion, :direccion, :direccion_tra, :telefono, :telefono_tra, :vive, :telefono_opc, :id_estado, :id_ciudad, :id_municipio, :id_parroquia)";
-    $stmt = $conn_pdo->prepare($sql);
 
-
-// Asignar valores a los parámetros de la consulta preparada
-$stmt->bindParam(':nombre', $nombre);
-$stmt->bindParam(':apellido', $apellido);
-$stmt->bindParam(':cedula', $cedula);
-$stmt->bindParam(':parentesco', $parentesco);
-$stmt->bindParam(':profesion', $profesion);
-$stmt->bindParam(':direccion', $direccion);
-$stmt->bindParam(':direccion_tra', $direccion_tra);
-$stmt->bindParam(':telefono', $telefono);
-$stmt->bindParam(':telefono_tra', $telefono_tra);
-$stmt->bindParam(':vive', $vive);
-$stmt->bindParam(':telefono_opc', $telefono_opc);
-$stmt->bindParam(':id_estado', $id_estado);
-$stmt->bindParam(':id_ciudad', $id_ciudad);
-$stmt->bindParam(':id_municipio', $id_municipio);
-$stmt->bindParam(':id_parroquia', $id_parroquia);
-
-// Ejecutar la consulta preparada
-if (empty($_POST['nombre'])) {
-    $message = "El campo 'nombre' es obligatorio. Por favor, complete el campo y vuelva a intentarlo.";
-} else {
-    // Consulta SQL UPDATE
-$sql = "UPDATE representante SET nombre = :nombre, apellido = :apellido, cedula = :cedula, profesion = :profesion, direccion = :direccion, direccion_tra = :direccion_tra, telefono = :telefono, telefono_tra = :telefono_tra, vive = :vive, telefono_opc = :telefono_opc, id_estado = :id_estado, id_ciudad = :id_ciudad, id_municipio = :id_municipio, id_parroquia = :id_parroquia WHERE id = :id_representante";
-
-// Preparar la consulta preparada
-$stmt = $conn_pdo->prepare($sql);
-
-// Vincular los valores del formulario a los marcadores de posición en la consulta SQL
-$stmt->bindParam(':nombre', $_POST['nombre']);
-$stmt->bindParam(':apellido', $_POST['apellido']);
-$stmt->bindParam(':cedula', $_POST['cedula']);
-$stmt->bindParam(':parentesco',$_POST['parentesco']);
-$stmt->bindParam(':profesion', $_POST['profesion']);
-$stmt->bindParam(':direccion', $_POST['direccion']);
-$stmt->bindParam(':direccion_tra', $_POST['direccion_tra']);
-$stmt->bindParam(':telefono', $_POST['telefono']);
-$stmt->bindParam(':telefono_tra', $_POST['telefono_tra']);
-$stmt->bindParam(':vive', $_POST['vive']);
-$stmt->bindParam(':telefono_opc', $_POST['telefono_opc']);
-$stmt->bindParam(':id_estado', $_POST['estado']);
-$stmt->bindParam(':id_ciudad', $_POST['ciudad']);
-$stmt->bindParam(':id_municipio', $_POST['municipio']);
-$stmt->bindParam(':id_parroquia', $_POST['parroquia']);
-$stmt->bindParam(':id_representante', $id_representante);
-
-
-    // Ejecutar la consulta preparada
-    if ($stmt->execute()) {
-        $message = "Representante actualizado correctamente";
-    } else {
-        $message = "Error al actualizar representante: " . $stmt->errorInfo()[2];
-    }
+    // Cerrar conexión PDO
+    $conn_pdo = null;
+} catch(PDOException $e) {
+    echo "Error: " . $e->getMessage();
 }
+
+// Limpiar buffer de salida
+ob_end_flush();
 ?>
+<!-- Aquí va el código HTML del formulario -->
+
            <!--INICIO del cont principal-->
            <div class="container">
            
             <h1 class="cir">Contenido principal</h1>
 
-<div class="container">
+
+
+            <div class="container">
 
     <h1 class="text-center mb-5">Registro de datos</h1>
 
-    <?php if(!empty($message)): ?>
-        <p><?= $message ?></p>
-    <?php endif; ?>
- 
-
-<!--<form action=" <?=$_SERVER['PHP_SELF']?>"method="post"> -->
-
-        <form action="representante_bd.php" method="post"> 
-
-    <div class="form-group">
-        <label for="nombre">Nombre:</label>
-        <input type="text" name="nombre" class="form-control" maxlength="50"required>
-    </div>
-
-    <div class="form-group">
-        <label for="apellido">Apellido:</label>
-        <input type="text" name="apellido" class="form-control" maxlength="50"required>
-    </div>
-
-    <div class="form-group">
-        <label for="cedula">CEDULA:</label>
-        <input type="number" name="cedula" class="form-control" maxlength="20" required>
-    </div>
-
- 
-    <div class="form-group">
-
-    <label for="parentesco">Parentesco:</label>
- 
-<?php $opcion_seleccionada="opcion2" ?>
-<select name="parentesco" class="form-control" required>
-  <option value="opcion1">Padre</option>
-  <option value="opcion2" <?php if ($opcion_seleccionada == "opcion2") echo "selected"; ?>>Madre (seleccionada por defecto)</option>
-  <option value="opcion3">Otros</option>
-</select>
-
-
-</div>
-
-    <div class="form-group">
-        <label for="profesion">profesion:</label>
-        <input type="text" name="profesion" class="form-control" maxlength="100" required>
-    </div>
-
-    <div class="form-group">
-        <label for="direccion">Dirección:</label>
-        <input type="text" name="direccion" class="form-control" maxlength="100" required>
-    </div>
-
-    <div class="form-group">
-        <label for="direccion_tra">Dirección del Trabajo:</label>
-        <input type="text" name="direccion_tra" class="form-control" maxlength="100" required>
-    </div>
-
-    <div class="form-group">
-        <label for="telefono">Telefono:</label>
-        <input type="number" name="telefono" class="form-control" required>
-    </div>
-
-    <div class="form-group">
-        <label for="telefono_tra">Telefono del Trabajo:</label>
-        <input type="number" name="telefono_tra" class="form-control" required>
-    </div>
-
-    <div class="form-group">
-        <label for="telefono_opc">Telefono Opcional:</label>
-        <input type="number" name="telefono_opc" class="form-control">
-    </div>
-
-    <div class="form-group">
-        <label for="vive"> vive ?</label>
-        <input type="checkbox" name="si">
-          <label> Si </label>
-          
-        <input type="checkbox" name="no">
-          <label> No </label>
-    </div>
-
-<!--INICIO DEL SELECT DINAMICO, RECUERDAD QUÉ EL SELECT PRINCIPAL ES ESTADO LUEGO CIUDAD-->
-
-<div class="form-group">
-    <label for="estados">Estado:</label>
-    <select name="estado" id="state" data-state="state"class="form-select"  required> 
-        <?php 
-require_once 'basedata/basedata1.php';
-            // Consulta para llenar el select con PDO
-$stmt = $conn_pdo->query('SELECT * FROM estados');
-if (!$stmt) {
-    echo "Error en la consulta: " . $conn_pdo->errorInfo()[2];
-} else {
-    foreach ($stmt as $opciones) {
-        echo '<option value="' . $opciones['id_estado'] . '">' . $opciones['estado'] . '</option>';
-    }
-}
-
-// Consulta para mostrar los datos con PDO
-$stmt = $conn_pdo->query('SELECT * FROM estados');
-if (!$stmt) {
-    echo "Error en la consulta: " . $conn_pdo->errorInfo()[2];
-} else {
-    while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        echo $fila['id_estado'] . ' ' . $fila['estado'] . '<br>';
-    }
-}
-        
-        ?>
-        
-    </select>
-</div>
-
-<div class="form-group">
-    <label for="ciudad_select">Ciudad:</label>
-    <select name="ciudad_select" id="ciudad_select" class="form-select" onchange="recargarListaMunicipio();" required>
-
-    <?php 
-require_once 'basedata/basedata1.php';
-            // Consulta para llenar el select con PDO
-$stmt = $conn_pdo->query('SELECT * FROM ciudades');
-if (!$stmt) {
-    echo "Error en la consulta: " . $conn_pdo->errorInfo()[2];
-} else {
-    foreach ($stmt as $opciones) {
-        echo '<option value="' . $opciones['id_ciudad'] . '">' . $opciones['ciudad'] . '</option>';
-    }
-}
-
-// Consulta para mostrar los datos con PDO
-$stmt = $conn_pdo->query('SELECT * FROM ciudades');
-if (!$stmt) {
-    echo "Error en la consulta: " . $conn_pdo->errorInfo()[2];
-} else {
-    while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        echo $fila['id_ciudad'] . ' ' . $fila['ciudad'] . '<br>';
-    }
-}
-        
-        ?>
-
-
-    </select>
-</div>
-
-<div class="form-group">
-    <label for="municipio_select">Municipio:</label>
-    <select name="municipio_select" id="municipio_select" class="form-select" onchange="recargarListaParroquia();" required>
-
-    <?php 
-require_once 'basedata/basedata1.php';
-            // Consulta para llenar el select con PDO
-$stmt = $conn_pdo->query('SELECT * FROM municipios');
-if (!$stmt) {
-    echo "Error en la consulta: " . $conn_pdo->errorInfo()[2];
-} else {
-    foreach ($stmt as $opciones) {
-        echo '<option value="' . $opciones['id_municipio'] . '">' . $opciones['municipio'] . '</option>';
-    }
-}
-
-// Consulta para mostrar los datos con PDO
-$stmt = $conn_pdo->query('SELECT * FROM municipios');
-if (!$stmt) {
-    echo "Error en la consulta: " . $conn_pdo->errorInfo()[2];
-} else {
-    while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        echo $fila['id_municipio'] . ' ' . $fila['municipio'] . '<br>';
-    }
-}
-        
-        ?>
-    </select>
-</div>
-
-<div class="form-group">
-    <label for="parroquia_select">Parroquia:</label>
-    <select name="parroquia_select" id="parroquia_select" class="form-select">
 
     
+
     <?php 
-require_once 'basedata/basedata1.php';
-            // Consulta para llenar el select con PDO
-$stmt = $conn_pdo->query('SELECT * FROM parroquias');
-if (!$stmt) {
-    echo "Error en la consulta: " . $conn_pdo->errorInfo()[2];
-} else {
-    foreach ($stmt as $opciones) {
-        echo '<option value="' . $opciones['id_parroquia'] . '">' . $opciones['parroquia'] . '</option>';
-    }
-}
-
-// Consulta para mostrar los datos con PDO
-$stmt = $conn_pdo->query('SELECT * FROM parroquias');
-if (!$stmt) {
-    echo "Error en la consulta: " . $conn_pdo->errorInfo()[2];
-} else {
-    while ($fila = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        echo $fila['id_parroquia'] . ' ' . $fila['parroquia'] . '<br>';
-    }
-}
-        
-        ?>
-
-    </select>
-</div>
-<script>
-    
-    const selec_state = document.querySelector('#state')
-
-    selec_state.addEventListener("change", ()=>{
-    let idstate = '';
-
-    idstate = event.target.value;
-   
-    const datas = {id:idstate}
-
-    fetch('http://localhost/E.B.N%20BOLIVARIANA%20CIRO%202023%20//basedata/mysql.php', {
-  method: 'POST',
-  body: JSON.stringify(datas),
-  headers: {'Content-Type': 'application/json'}
-})
-.then(function(response) {
-  return response.json();
-})
-.then(function(data) {
-  console.log(data);
-})
-.catch(function(error) {
-  console.error(error);
-});
-})  
-</script>
-
-
-
-<?php $nombrev="Victor";
+  // Definir la opción seleccionada por defecto
+  $opcion_seleccionada = "opcion2";
 ?>
+<form action="representante.php" method="post" id="miFormulario" enctype="multipart/form-data"> 
+  <div class="form-group">
+    <label for="nombre">Nombre:</label>
+    <input type="text" name="nombre" id="nombre" class="form-control" maxlength="50" required>
+  </div>
+
+  <div class="form-group">
+    <label for="apellido">Apellido:</label>
+    <input type="text" name="apellido" id="apellido" class="form-control" maxlength="50" required>
+  </div>
+
+  <div class="form-group">
+    <label for="cedula">CEDULA:</label>
+    <input type="number" name="cedula" id="cedula" class="form-control" maxlength="20" required>
+  </div>
+
+  <div class="form-group">
+    <label for="parentesco">Parentesco:</label>
+    <select name="parentesco" id="parentesco" class="form-control" required>
+      <option value="opcion1">Padre</option>
+      <option value="opcion2" <?php if ($opcion_seleccionada == "opcion2") echo "selected"; ?>>Madre (seleccionada por defecto)</option>
+      <option value="opcion3">Otros</option>
+    </select>
+    
+  </div>
+  <div class="form-group">
+    <label for="profesion">Profesion:</label>
+    <input type="text" name="profesion" id="profesion" class="form-control" maxlength="100" required>
+  </div>
+
+  <div class="form-group">
+    <label for="direccion">Dirección:</label>
+    <input type="text" name="direccion" id="direccion" class="form-control" maxlength="100" required>
+  </div>
+
+  <div class="form-group">
+    <label for="direccion_tra">Dirección del Trabajo:</label>
+    <input type="text" name="direccion_tra" id="direccion_tra" class="form-control" maxlength="100" required>
+  </div>
+
+  <div class="form-group">
+    <label for="telefono">Telefono:</label>
+    <input type="number" name="telefono" id="telefono" class="form-control" required>
+  </div>
+
+  <div class="form-group">
+    <label for="telefono_tra">Telefono del Trabajo:</label>
+    <input type="number" name="telefono_tra"id="telefono_tra"class="form-control" required>
+  </div>
+
+  <div class="form-group">
+    <label for="telefono_opc">Telefono Opcional:</label>
+    <input type="number" name="telefono_opc" id="telefono_opc"class="form-control">
+  </div>
+
+  <div class="form-group">
+    <label for="vive">¿Vive?</label>
+    <input type="checkbox"  name="si" id="vive">
+    <label>Si</label>
+    <input type="checkbox" name="no" id="vive">
+    <label>No</label>
+  </div>
+
+<!-- INICIO DEL SELECT DINAMICO, RECUERDAD QUÉ EL SELECT PRINCIPAL ES ESTADO LUEGO CIUDAD -->
+<?php require_once 'basedata/basedata1.php'; ?>
+
+<div class="form-group">
+  <label for="estados">Estado:</label>
+  <select name="estado" id="state" data-state="state" class="form-select select_representante" required> 
+    <option value="">Seleccione una opción</option>
+    <?php 
+      $stmt = $conn_pdo->query('SELECT * FROM estados');
+      if ($stmt) {
+        foreach ($stmt as $row) {
+          echo '<option value="' . $row['id_estado'] . '">' . $row['estado'] . '</option>';
+        }
+      }
+    ?>
+  </select>
+</div>
+
+<div class="form-group">
+  <label for="ciudad_select">Ciudad:</label>
+  <select name="ciudad" id="ciudad_select" class="form-select select_representante" required disabled>
+    <option value="0">eliga la ciudad</option>
+   
+  </select>
+</div>
+
+<div class="form-group">
+  <label for="municipio">Municipio:</label>
+  <select name="municipio" id="municipio_select" class="form-select select_representante" required>
+    <option value="">Seleccione una opción</option>
+    <?php 
+      $stmt = $conn_pdo->query('SELECT * FROM municipios');
+      if ($stmt) {
+        foreach ($stmt as $row) {
+          echo '<option value="' . $row['id_municipio'] . '">' . $row['municipio'] . '</option>';
+        }
+      }
+    ?>
+  </select>
+</div>
+
+<div class="form-group">
+  <label for="parroquia">Parroquia:</label>
+  <select name="parroquia" id="parroquia_select" class="form-select select_representante">
+    <option value="">Seleccione una opción</option>
+    <?php 
+      $stmt = $conn_pdo->query('SELECT * FROM parroquias');
+      if ($stmt) {
+        foreach ($stmt as $row) {
+          echo '<option value="' . $row['id_parroquia'] . '">' . $row['parroquia'] . '</option>';
+        }
+      }
+    ?>
+  </select>
+</div>
+
+<div class="d-flex justify-content-center">
+<button class="btn btn-danger" type="submit" name="enviar"  id="permiteSubmit">Guardar Datos</button>
+</div>
+
+</form>
+</div>
+ </div>
+
+ <?php include 'modal_data.php'; ?>
+  <?php// include 'modal_data_bd.php';?>
+
+
+
+<script src="app.js"></script>
 
 
 <!-- <script>
@@ -636,256 +517,6 @@ if (!$stmt) {
 
 
             
-
-                        <!--EDITAR,GUARDAR Y LIMPIAR--> 
- <div class="d-flex justify-content-center">
-<!--    <input class="btn btn-danger" type="submit" value="GUARDAR DATOS" name="enviar" id="enviar">-->
-<button class="btn btn-danger" type="submit" value="enviar" name="enviar" id="enviar">Guardar Datos</button>
-</div>
-
-
-
-
-
-
- 
-
-<button type="button" class="mt-5 mx-5 btn btn-primary" data-bs-toggle="modal" data-bs-target="#miModal">Activar Modal</button>
-
-<div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalTitle">Bienvenido a mi sitio</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-      <div class="modal-body">
-        <button type="button" class="btn btn-primary" onclick="mostrarImagen()">Button</button>
-        <p>
-        <!-- Input de nombre -->
-<div class="form-group">
-  <label for="nombre">Nombre:</label>
-  <input type="text" name="nombre" value="<?php echo $nombrev; ?>" class="form-control" maxlength="50" required readonly>
-</div>
-
-
-<!-- Input de apellido -->
-<div class="form-group">
-  <label for="apellido">Apellido:</label>
-  <input type="text" name="apellido" class="form-control" maxlength="50" required readonly>
-</div>
-
-<!-- Input de cedula -->
-<div class="form-group">
-  <label for="cedula">CEDULA:</label>
-  <input type="number" name="cedula" class="form-control" maxlength="20" required readonly>
-</div>
-
-<!-- Input de parentesco -->
-<div class="form-group">
-  <label for="parentesco">Parentesco:</label>
-  <select name="parentesco" class="form-control" required readonly>
-    <option value="opcion1">Padre</option>
-    <option value="opcion2" selected>Madre (seleccionada por defecto)</option>
-    <option value="opcion3">Otros</option>
-  </select>
-</div>
-
-<!-- Input de profesion -->
-<div class="form-group">
-  <label for="profesion">Profesión:</label>
-  <input type="text" name="profesion" class="form-control" maxlength="100" required readonly>
-</div>
-
-<!-- Input de direccion -->
-<div class="form-group">
-  <label for="direccion">Dirección:</label>
-  <input type="text" name="direccion" class="form-control" maxlength="100" required readonly>
-</div>
-
-<!-- Input de direccion_tra -->
-<div class="form-group">
-  <label for="direccion_tra">Dirección del Trabajo:</label>
-  <input type="text" name="direccion_tra" class="form-control" maxlength="100" required readonly>
-</div>
-
-<!-- Input de telefono -->
-<div class="form-group">
-  <label for="telefono">Telefono:</label>
-  <input type="number" name="telefono" class="form-control" required readonly>
-</div>
-
-<!-- Input de telefono_tra -->
-<div class="form-group">
-  <label for="telefono_tra">Telefono del Trabajo:</label>
-  <input type="number" name="telefono_tra" class="form-control" required readonly>
-</div>
-
-<!-- Input de telefono_opc -->
-<div class="form-group">
-  <label for="telefono_opc">Telefono Opcional:</label>
-  <input type="number" name="telefono_opc" class="form-control" readonly>
-</div>
-
-<!-- Input de vive -->
-<div class="form-group">
-  <label for="vive">¿Vive?</label>
-  <div class="form-check">
-    <input class="form-check-input" type="radio" name="vive" id="viveSi" value="si" checked readonly>
-    <label class="form-check-label" for="viveSi">
-      Sí
-    </label>
-  </div>
-  <div class="form-check">
-    <input class="form-check-input" type="radio" name="vive" id="viveNo" value="no" readonly>
-    <label class="form-check-label" for="viveNo">
-      No
-    </label>
-  </div>
-</div>
-
-<!-- Input de estado -->
-<div class="form-group">
-  <label for="estado">Estado:</label>
-  <select name="estado" class="form-control" required readonly>
-    <option value="opcion1">Estado 1</option>
-    <option value="opcion2" selected>Estado 2 (seleccionada por defecto)</option>
-    <option value="opcion3">Estado 3</option>
-  </select>
-</div>
-
-<!-- Input de ciudad_select -->
-<div class="form-group">
-  <label for="ciudad_select">Ciudad:</label>
-  <select name="ciudad_select" class="form-control" required readonly>
-    <option value="opcion1">Ciudad 1</option>
-    <option value="opcion2" selected>Ciudad 2 (seleccionada por defecto)</option>
-    <option value="opcion3">Ciudad 3</option>
-  </select>
-</div>
-
-<!-- Input de municipio_select -->
-<div class="form-group">
-  <label for="municipio_select">Municipio:</label>
-  <select name="municipio_select" class="form-control" required readonly>
-    <option value="opcion1">Municipio 1</option>
-    <option value="opcion2" selected>Municipio 2 (seleccionada por defecto)</option>
-    <option value="opcion3">Municipio 3</option>
-  </select>
-</div>
-
-<!-- Input de parroquia_select -->
-<div class="form-group">
-  <label for="parroquia_select">Parroquia:</label>
-  <select name="parroquia_select" class="form-control" required readonly>
-    <option value="opcion1">Parroquia 1</option>
-    <option value="opcion2" selected>Parroquia 2 (seleccionada por defecto)</option>
-    <option value="opcion3">Parroquia 3</option>
-  </select>
-</div></p>
-        <img src="ruta/de/la/imagen.jpg" alt="Imagen descriptiva" style="display: none;" aria-label="Imagen descriptiva">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-success" id="botonAceptar" onclick="mostrarImagen()" aria-label="Aceptar">Aceptar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!--Pruebas 
-
-c
-<script>
-  function mostrarImagen() {
-    var imagen = document.querySelector('#miModal .modal-body img');
-    imagen.style.display = "block";
-    var botonAceptar = document.querySelector('#botonAceptar');
-    botonAceptar.disabled = true;
-    botonAceptar.innerText = "Imagen mostrada";
-  }
-</script>-->
-
-
-
-<!--<form id="miFormulario">
-  <div class="mb-3">
-    <label for="nombre" class="form-label">Nombre</label>
-    <input type="text" class="form-control" id="nombre" name="nombre">
-  </div>
-  <div class="mb-3">
-    <label for="correo" class="form-label">Correo electrónico</label>
-    <input type="email" class="form-control" id="correo" name="correo">
-  </div>
-  <button type="submit" class="btn btn-primary">Enviar</button>
-</form>
-
-<div class="modal fade" id="modalRevisar" tabindex="-1" aria-labelledby="modalRevisarTitulo" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalRevisarTitulo">Revisa tus datos</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="mb-3">
-            <label for="nombreRevisar" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="nombreRevisar" readonly>
-          </div>
-          <div class="mb-3">
-            <label for="correoRevisar" class="form-label">Correo electrónico</label>
-            <input type="email" class="form-control" id="correoRevisar" readonly>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="enviarFormulario()">Enviar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-  const miFormulario = document.querySelector('#miFormulario');
-  const nombreRevisar = document.querySelector('#nombreRevisar');
-  const correoRevisar = document.querySelector('#correoRevisar');
-
-  miFormulario.addEventListener('submit', function(event) {
-    event.preventDefault(); // Evita el envío del formulario
-    // Obtener los valores de los campos del formulario
-    const nombre = document.querySelector('#nombre').value;
-    const correo = document.querySelector('#correo').value;
-    // Actualizar los campos del formulario de revisión
-    nombreRevisar.value = nombre;
-    correoRevisar.value = correo;
-    // Colocar los inputs en modo "read-only"
-    document.querySelectorAll('#modalRevisar input').forEach(function(input) {
-      input.setAttribute('readonly', '');
-    });
-    // Mostrar el modal de revisión
-    const modalRevisar = new bootstrap.Modal(document.querySelector('#modalRevisar'));
-    modalRevisar.show();
-  });
-
-  function enviarFormulario() {
-    // Enviar el formulario
-    miFormulario.submit();
-    // Limpiar los campos del formulario
-    miFormulario.reset();
-  }
-</script>
--->
-
-</form>
-</div>
-
-        </div>
- 
-
-
   
  
             <!-- Footer -->
@@ -942,6 +573,7 @@ c
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ 
 </body>
 
 </html>
