@@ -193,6 +193,7 @@ require 'basedata/basedata2.php';
                 } }?>
         </select>
     </div>
+    
     <br> 
 <hr>
 <h6 class="collapse-header">Grado a Ingresar:</h6>

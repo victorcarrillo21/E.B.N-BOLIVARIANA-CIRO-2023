@@ -8,7 +8,7 @@ if (isset($_SESSION['users_id'])) {
 }
 
 // Conexión a la base de datos
-require 'basedata/basedata2.php';
+require 'basedata/basedata1.php';
 
 // Manejar el inicio de sesión
 if(isset($_POST['usuario']) && isset($_POST['clave'])) {

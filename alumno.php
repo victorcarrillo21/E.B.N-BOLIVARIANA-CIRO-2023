@@ -75,9 +75,9 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
-                     <span>SALUD</span>
+                     <span>SALUD Y TRANSPORTE</span>
                 </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+            <!--    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
@@ -87,7 +87,7 @@
                         <a class="collapse-item" href="utilities-other.php">Other</a>
                     </div>
                 </div>
-            </li>
+            </li> -->
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -98,12 +98,12 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+         <!--   <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                      <span>TRANSPORTE</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                </a>-->
+            <!--  <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Login Screens:</h6>
                         <a class="collapse-item" href="login.html">Login</a>
@@ -115,11 +115,11 @@
                         <a class="collapse-item" href="blank.html">Blank Page</a>
                     </div>
                 </div>
-            </li>
+            </li>-->
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.php">
+                <a class="nav-link" href="persecucion.php">
                      <span>PERSECUCION</span></a>
             </li>
 
@@ -353,8 +353,10 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                 
-                <?php
-require_once "basedata/basedata2.php";
+<?php
+
+
+        require_once "basedata/basedata1.php";
 
 if ($conn) {
   $sql = "INSERT INTO alumno (nombre, apellido, cedula, genero, fecha_nac, lugar_nac, direccion, periodo_escolar, id_estado, id_ciudad, id_municipio, id_parroquia, id_procedencia, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -478,7 +480,8 @@ if ($conn) {
   <label for="apellido" class="form-label">Apellido:</label>
   <input type="text" name="apellido" id="apellido" class="form-control" required maxlength="50">
 </div>
-<!--SCRIPT DE FORMULARIO--> 
+                
+        <!--SCRIPT DE FORMULARIO
 
 <script>
   const form = document.querySelector('form');
@@ -492,7 +495,7 @@ if ($conn) {
     }
   });
 </script>
-
+-->
   <div class="mb-3">
     <label for="cedula" class="form-label">Cédula:</label>
     <input type="number" name="cedula" id="cedula" class="form-control" required>
@@ -535,193 +538,62 @@ if ($conn) {
 
   </div>
 
-  <!-- Obtener conexión a la base de datos usando PDO -->
-<?php
-    
-    require_once "basedata/basedata2.php";
-    
-    // Verificar si la variable $conn está definida y no es nula
-    $resultado = mysqli_query($GLOBALS['conn'], "SELECT * FROM estados");
-if ($resultado) {
-    while ($row = mysqli_fetch_array($resultado)) {
-        echo "<option value='" . $row['id_estado'] . "'>" . $row['estado'] . "</option>";
-    }
-} else {
-    echo "Error en la consulta SQL: " . mysqli_error($GLOBALS['conn']);
-}
-?>
+  <!-- INICIO DEL SELECT DINAMICO, RECUERDAD QUÉ EL SELECT PRINCIPAL ES ESTADO LUEGO CIUDAD -->
+<?php require_once 'basedata/basedata1.php'; ?>
 
-<select name="estado" id="estado">
-   <?php
-    if (isset($GLOBALS['conn']) && !empty($GLOBALS['conn'])) 
-   $result = mysqli_query($GLOBALS['conn'], "SELECT * FROM estados");
-   // Aquí se debe utilizar la variable $conn que contiene el objeto de conexión a la base de datos.
-   while ($row = mysqli_fetch_array($result)) {
-    echo "<option value='" . $row['id_estado'] . "'>" . $row['estado'] . "</option>";
-
-   }
-   ?>
-</select>```
-
-
-<script>
-   $(document).ready(function() {
-      $('#estado').change(function() {
-         var estado_id = $(this).val();
-         $.ajax({
-            type: "POST",
-            url: "get_ciudades.php",
-            data: { estado_id: estado_id },
-            success: function(response) {
-               $('#ciudad').html(response);
-            }
-         });
-      });
-   });
-</script>
-
-
-<select name="ciudad" id="ciudad">
-   <option value="">Selecciona una ciudad</option>
-</select>
-<select name="municipio" id="municipio">
-   <option value="">Selecciona un municipio</option>
-</select>
-
-<script>
-   $(document).ready(function() {
-      $('#ciudad').change(function() {
-         var ciudad_id = $(this).val();
-         $.ajax({
-            type: "POST",
-            url: "get_municipios.php",
-            data: { ciudad_id: ciudad_id },
-            success: function(response) {
-               $('#municipio').html(response);
-            }
-         });
-      });
-   });
-</script>
-```
-<select name="parroquia" id="parroquia">
-   <option value="">Selecciona una parroquia</option>
-</select>
-```
-<script>
-   $(document).ready(function() {
-      $('#municipio').change(function() {
-         var municipio_id = $(this).val();
-         $.ajax({
-            type: "POST",
-            url: "get_parroquias.php",
-            data: { municipio_id: municipio_id },
-            success: function(response) {
-               $('#parroquia').html(response);
-            }
-         });
-      });
-   });
-</script>
-```
- 
-```
-
-
-<!--FIN DEL LLAMADO-->
-<!-- Selector de estados -->
-
-<div class="mb-3">
-    <label for="id_estado" class="form-label">Estado:</label>
-    <select name="id_estado" id="id_estado" class="form-control" required>
-        <option value="">Seleccione un estado</option>
-        <?php
-            // Consulta para obtener los estados
-            $stmt = $dbh->query("SELECT id_estado, nombre_estado FROM estados");
-
-            // Crear el selector de estados
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                echo '<option value="'.$row['id_estado'].'">'.$row['nombre_estado'].'</option>';
-            }
-        ?>
-    </select>
+<div class="form-group">
+  <label for="estados">Estado:</label>
+  <select name="estado" id="state" data-state="state" class="form-select select_representante" required> 
+    <option value="">Seleccione una opción</option>
+    <?php 
+      $stmt = $conn_pdo->query('SELECT * FROM estados');
+      if ($stmt) {
+        foreach ($stmt as $row) {
+          echo '<option value="' . $row['id_estado'] . '">' . $row['estado'] . '</option>';
+        }
+      }
+    ?>
+  </select>
 </div>
 
-<!-- Selector de ciudades -->
-<div class="mb-3">
-    <label for="id_ciudad" class="form-label">Ciudad:</label>
-    <select name="id_ciudad" id="id_ciudad" class="form-control" required>
-        <option value="">Seleccione una ciudad</option>
-    </select>
+<div class="form-group">
+  <label for="ciudad_select">Ciudad:</label>
+  <select name="ciudad" id="ciudad_select" class="form-select select_representante" required disabled>
+    <option value="0">eliga la ciudad</option>
+   
+  </select>
 </div>
 
-<script>
-    // Listener de eventos en el selector de estados
-    $("#id_estado").change(function() {
-        var id_estado = $(this).val();
-        $.ajax({
-            url: "division_select.php",
-            type: "POST",
-            data: {id_estado: id_estado},
-            success: function(data) {
-                // Actualizar el selector de ciudades
-                $("#id_ciudad").html(data);
-
-                // Reiniciar el selector de municipios y de parroquias
-                $("#id_municipio").html("<option value=''>Seleccione un municipio</option>");
-                $("#id_parroquia").html("<option value=''>Seleccione una parroquia</option>");
-            }
-        });
-    });
-
-    // Listener de eventos en el selector de ciudades
-    $("#id_ciudad").change(function() {
-        var id_ciudad = $(this).val();
-        $.ajax({
-            url: "division_select.php",
-            type: "POST",
-            data: {id_ciudad: id_ciudad},
-            success: function(data) {
-                // Actualizar el selector de municipios
-                $("#id_municipio").html(data);
-
-                // Reiniciar el selector de parroquias
-                $("#id_parroquia").html("<option value=''>Seleccione una parroquia</option>");
-            }
-        });
-    });
-
-    // Listener de eventos en el selector de municipios
-    $("#id_municipio").change(function() {
-        var id_municipio = $(this).val();
-        $.ajax({
-            url: "division_select.php",
-            type: "POST",
-            data: {id_municipio: id_municipio},
-            success: function(data) {
-                // Actualizar el selector de parroquias
-                $("#id_parroquia").html(data);
-            }
-        });
-    });
-    
-</script>
-
-<!-- Selector de municipios -->
-<div class="mb-3">
-    <label for="id_municipio" class="form-label">Municipio:</label>
-    <select name="id_municipio" id="id_municipio" class="form-control" required>
-        <option value="">Seleccione un municipio</option>
-    </select>
+<div class="form-group">
+  <label for="municipio">Municipio:</label>
+  <select name="municipio" id="municipio_select" class="form-select select_representante" required>
+    <option value="">Seleccione una opción</option>
+    <?php 
+      $stmt = $conn_pdo->query('SELECT * FROM municipios');
+      if ($stmt) {
+        foreach ($stmt as $row) {
+          echo '<option value="' . $row['id_municipio'] . '">' . $row['municipio'] . '</option>';
+        }
+      }
+    ?>
+  </select>
 </div>
 
-<!-- Selector de parroquias -->
-<div class="mb-3">
-    <label for="id_parroquia" class="form-label">Parroquia:</label>
-    <select name="id_parroquia" id="id_parroquia" class="form-control" required>
-        <option value="">Seleccione una parroquia</option>
-    </select>
+<div class="form-group">
+  <label for="parroquia">Parroquia:</label>
+  <select name="parroquia" id="parroquia_select" class="form-select select_representante">
+    <option value="">Seleccione una opción</option>
+    <?php 
+      $stmt = $conn_pdo->query('SELECT * FROM parroquias');
+      if ($stmt) {
+        foreach ($stmt as $row) {
+          echo '<option value="' . $row['id_parroquia'] . '">' . $row['parroquia'] . '</option>';
+        }
+      }
+    ?>
+  </select>
 </div>
+
   <div class="mb-3">
     <label for="id_procedencia" class="form-label">ID de procedencia:</label>
     <input type="number" name="id_procedencia" id="id_procedencia" class="form-control" required>

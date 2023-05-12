@@ -69,8 +69,8 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header"></h6>
-                        <a class="collapse-item" href="buttons.php">REPRESENTANTE</a>
-                        <a class="collapse-item" href="cards.php">ALUMNO</a>
+                        <a class="collapse-item" href="representante.php">REPRESENTANTE</a>
+                        <a class="collapse-item" href="alumno.php">ALUMNO</a>
                     </div>
                 </div>
             </li>
@@ -82,7 +82,7 @@
                     <i class="fas fa-fw fa-wrench"></i>
                     <span>SALUD</span>
                 </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+               <!-- <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
@@ -92,7 +92,7 @@
                         <a class="collapse-item" href="utilities-other.php">Other</a>
                     </div>
                 </div>
-            </li>
+            </li> -->
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -125,7 +125,7 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.php">
+                <a class="nav-link" href="persecucion.php">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>PERSECUCION</span></a>
             </li>
