@@ -280,7 +280,6 @@ try {
             $id_ciudad = isset($_POST['ciudad']) ? $_POST['ciudad'] : "";
             $id_municipio = isset($_POST['municipio']) ? $_POST['municipio'] : "";
             $id_parroquia = isset($_POST['parroquia']) ? $_POST['parroquia'] : "";
-
             // Vincular parámetros
             $stmt->bindParam(':nombre', $nombre);
             $stmt->bindParam(':apellido', $apellido);
@@ -419,7 +418,7 @@ ob_end_flush();
 
 <div class="form-group">
   <label for="ciudad_select">Ciudad:</label>
-  <select name="ciudad" id="ciudad_select" class="form-select select_representante" required disabled>
+  <select name="ciudad" id="ciudad_select" class="form-select select_representante" required>
     <option value="0">eliga la ciudad</option>
    
   </select>
@@ -454,70 +453,19 @@ ob_end_flush();
     ?>
   </select>
 </div>
+<button class="btn btn-danger" type="button" name="enviar" id="permiteSubmit" data-bs-toggle="modal" data-bs-target="#myModal">Guardar Datos</button>
 
-<div class="d-flex justify-content-center">
-<button class="btn btn-danger" type="submit" name="enviar"  id="permiteSubmit">Guardar Datos</button>
-</div>
+<?php include 'modal_data.php'; ?>
 
 </form>
 </div>
  </div>
 
- <?php include 'modal_data.php'; ?>
-  <?php// include 'modal_data_bd.php';?>
+  <script src="modal.js"></script>
+  <script src="app.js"></script>
 
 
-
-<script src="app.js"></script>
-
-
-<!-- <script>
-    $(document).ready(function() {
-        recargarListaCiudad();
-
-        $('#estado_select').change(function() {
-            recargarListaCiudad();
-        });
-    });
-
-    function recargarListaCiudad() {
-        $.ajax({
-            type: "POST",
-            url: "../E.B.N BOLIVARIANA CIRO 2023/basedata/proceso.php",
-            data: "estado=" + $("#estado_select").val(),
-            success: function(resultado) {
-                $('#ciudad_select').html(resultado);
-                recargarListaMunicipio();
-            }
-        });
-    }
-
-    function recargarListaMunicipio() {
-        $.ajax({
-            type: "POST",
-            url: "../E.B.N BOLIVARIANA CIRO 2023/basedata/proceso.php",
-            data: "ciudad=" + $("#ciudad_select").val(),
-            success: function(resultado) {
-                $('#municipio_select').html(resultado);
-                recargarListaParroquia();
-            }
-        });
-    }
-
-    function recargarListaParroquia() {
-        $.ajax({
-            type: "POST",
-            url: "../E.B.N BOLIVARIANA CIRO 2023/basedata/proceso.php",
-            data: "municipio=" + $("#municipio_select").val(),
-            success: function(resultado) {
-                $('#parroquia_select').html(resultado);
-            }
-        });
-    }
-</script> -->
-
-
-
+ 
             
   
  

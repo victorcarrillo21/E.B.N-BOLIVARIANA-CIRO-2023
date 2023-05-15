@@ -1,6 +1,3 @@
-<?php require_once "Vista/parte_superior.php"?>
-
-<script>
 function getUserInfo(userIds) {
     const promises = [];
   
@@ -11,7 +8,11 @@ function getUserInfo(userIds) {
         .then(data => ({ id: userId, name: data.name, email: data.email }))
         .catch(error => console.error(error));
       promises.push(promise);
-    } 
+    }
+    const userIds = [1, 2, 3, 4, 5];
+    getUserInfo(userIds)
+      .then(userInfo => console.log(userInfo))
+      .catch(error => console.error(error));
     
     return Promise.all(promises);
   }
@@ -20,8 +21,3 @@ function getUserInfo(userIds) {
 getUserInfo(userIds)
   .then(userInfo => console.log(userInfo))
   .catch(error => console.error(error));
-  </script>
- 
-
-
-<?php require_once "Vista/parte_inferior.php"?>

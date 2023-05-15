@@ -614,7 +614,12 @@ if ($conn) {
   <button type="submit" class="btn btn-primary vh-1">Guardar</button>
 </form>
  
- 
+
+
+
+
+
+<script src="app.js"></script>
                 </div>
                 <!-- /.container-fluid -->
 

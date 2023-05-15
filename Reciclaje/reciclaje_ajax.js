@@ -123,21 +123,6 @@ En resumen, este código utiliza una solicitud AJAX para obtener información de
     LO PROCESA EN LA BD, HACIENDO UNA CONSULTA,DESPUÉS LO REENVIA EN HTTPS*/
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*
 <script>
     // Listener de eventos en el selector de estados
@@ -190,17 +175,166 @@ En resumen, este código utiliza una solicitud AJAX para obtener información de
     });
     
 </script>
--->
-
-
-
 
 En resumen, este código utiliza una solicitud AJAX para obtener información del servidor web sin tener que recargar la página. Cuando un usuario selecciona una opción en un menú desplegable con el ID "id_estado", el código envía una solicitud al servidor web con el ID del estado seleccionado y actualiza los menús desplegables de ciudades, municipios y parroquias con la información recibida del servidor web. Además, este código tiene tres detectores de eventos similares para los menús desplegables de ciudades, municipios y parroquias, que actualizan los menús desplegables correspondientes cuando un usuario selecciona una opción.
 
 
-
-
-
-
-
 */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                //13-5-2023
+
+// Obtener el formulario y los campos
+/*const miFormulario = document.querySelector('#miFormulario');
+const campos = miFormulario.querySelectorAll('input, select');
+
+// Agregar un evento al formulario cuando se envía
+miFormulario.addEventListener('submit', (event) => {
+  // Evitar que el formulario se envíe de forma predeterminada
+  event.preventDefault();
+
+  // Obtener los valores de los campos del formulario
+  const valores = {};
+  campos.forEach((campo) => {
+    valores[campo.id] = campo.value;
+  });
+
+  // Mostrar los datos del formulario en el modal
+  Object.keys(valores).forEach((key) => {
+    const modalCampo = document.querySelector(`#modal-${key}`);
+    if (modalCampo) {
+      modalCampo.value = valores[key];
+    }
+  });
+
+  // Mostrar el modal
+  const miModal = new bootstrap.Modal(document.getElementById('miModal'));
+  miModal.show();
+});
+
+// Manejar el evento de clic en el botón "Aceptar" del modal
+const enviarBoton = document.querySelector('#enviar-datos');
+enviarBoton.addEventListener('click', () => {
+  const datos = {};
+  campos.forEach((campo) => {
+    datos[campo.id] = campo.value;
+  });
+
+  // Enviar los datos del formulario al servidor
+  fetch('http://localhost/E.B.N%20BOLIVARIANA%20CIRO%202023%20//basedata/mysql.php', {
+    method: 'POST',
+    body: JSON.stringify(datos),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => {
+    if (response.ok) {
+      // Mostrar un mensaje de éxito al usuario
+      const mensajeExito = document.querySelector('#mensaje-exito');
+      mensajeExito.style.display = 'block';
+    } else {
+      // Mostrar un mensaje de error al usuario
+      alert('Error al enviar los datos del formulario.');
+    }
+  })
+  .catch(error => {
+    console.error('Error al enviar los datos del formulario:', error);
+  });
+
+  // Cerrar el modal
+  const miModal = bootstrap.Modal.getInstance(document.getElementById('miModal'));
+  miModal.hide();
+});*/
+
+              //--------------------------------------------------------------------//
+/*
+<script>
+
+// Obtener el formulario
+const miFormulario = document.querySelector('#miFormulario');
+const campos = miFormulario.querySelectorAll('input, select');
+
+// Agregar un evento al formulario cuando se envía
+miFormulario.addEventListener('submit', (event) => {
+    // Evitar que el formulario se envíe de forma predeterminada
+    event.preventDefault();
+
+    // Obtener los valores de los campos del formulario
+    const valores = {};
+    campos.forEach((campo) => {
+        valores[campo.id] = campo.value;
+    });
+
+    // Mostrar los datos del formulario en el modal
+    Object.keys(valores).forEach((key) => {
+        const modalCampo = document.querySelector(`#modal-${key}`);
+        if (modalCampo) {
+            modalCampo.value = valores[key];
+        }
+    });
+
+    // Mostrar el modal
+    const myModal = new bootstrap.Modal(document.getElementById('myModal'));
+    myModal.show();
+});
+
+// Manejar el evento de clic en el botón "Enviar" del modal
+const enviarBoton = document.querySelector('#confirmar-envio');
+enviarBoton.addEventListener('click', () => {
+  const valores = {};
+  campos.forEach((campo) => {
+    valores[campo.id] = campo.value;
+  });
+  
+  enviarDatos(valores);
+});
+
+// Enviar los datos del formulario al servidor
+function enviarDatos(datos) {
+  fetch('http://localhost/E.B.N%20BOLIVARIANA%20CIRO%202023%20//basedata/mysql.php', {
+    method: 'POST',
+    body: JSON.stringify(datos),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => {
+    if (response.ok) {
+      // Mostrar un mensaje de éxito al usuario
+      const mensajeExito = document.querySelector('#mensaje-exito');
+      mensajeExito.style.display = 'block';
+    } else {
+      // Mostrar un mensaje de error al usuario
+      alert('Error al enviar los datos del formulario.');
+    }
+  })
+  .catch(error => {
+    console.error('Error al enviar los datos del formulario:', error);
+  });
+}
+*/
+                       //13-5-2023
+
+/*Ambos códigos son prácticas comunes para crear un formulario con modal y enviar datos a un servidor. Utilizan eventos para obtener los valores del formulario, mostrarlos en el modal y enviarlos al servidor. La principal diferencia radica en la forma en que se obtienen los valores de los campos del formulario. Ambos son válidos y la elección depende del contexto y las preferencias del programador.*/

@@ -14,11 +14,22 @@ select_all.forEach(select=>{
         body: JSON.stringify(data),
         headers: {'Content-Type': 'application/json'}
         })
+
         .then(function(response) {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
         return response.json();
         })
         .then(function(data) {
-       /* data.forEach(function(ciudad) {
+
+      
+      
+      
+      
+      
+        
+        /*  data.forEach(function(ciudad) {
         var option = document.createElement("option");
         option.value = ciudad.id_ciudad;
         option.text = ciudad.ciudad;
@@ -26,7 +37,11 @@ select_all.forEach(select=>{
         select_ciudad.disabled=false
         select_ciudad.appendChild(option)
         });*/
-        })
+        
+    
+    
+    
+    })
         .catch(function(error) {
         console.error(error);
         });

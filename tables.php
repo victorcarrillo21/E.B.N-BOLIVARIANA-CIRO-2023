@@ -80,7 +80,7 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>SALUD</span>
+                    <span>SALUD Y TRANSPORTE</span>
                 </a>
                <!-- <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
@@ -109,7 +109,7 @@
                     <i class="fas fa-fw fa-folder"></i>
                     <span>TRANSPORTE</span>
                 </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+              <!--  <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Login Screens:</h6>
                         <a class="collapse-item" href="login.php">Login</a>
@@ -122,7 +122,7 @@
                     </div>
                 </div>
             </li>
-
+                    -->
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="persecucion.php">
@@ -134,7 +134,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="tables.php">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
+                    <span>TABLA</span></a>
             </li>
 
             <!-- Divider -->
