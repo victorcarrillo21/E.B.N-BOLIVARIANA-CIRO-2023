@@ -335,7 +335,9 @@ ob_end_flush();
   // Definir la opción seleccionada por defecto
   $opcion_seleccionada = "opcion2";
 ?>
-<form action="representante.php" method="post" id="miFormulario" enctype="multipart/form-data"> 
+<!--<form action="representante.php" method="post" id="miFormulario" enctype="multipart/form-data"> -->
+
+<form id="miFormulario"> 
   <div class="form-group">
     <label for="nombre">Nombre:</label>
     <input type="text" name="nombre" id="nombre" class="form-control" maxlength="50" required>

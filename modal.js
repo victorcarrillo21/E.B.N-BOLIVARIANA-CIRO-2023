@@ -1,4 +1,68 @@
-const miFormulario = document.getElementById('miFormulario');
+$(document).ready(function() {
+  // Handle form submission
+  $('#miFormulario').submit(function(event) {
+    event.preventDefault(); // Prevent form from submitting normally
+
+    // Get form data
+    var formData = $(this).serialize();
+
+    // Display preview in modal
+    $('#previewNombre').text($('#nombre').val());
+    $('#previewApellido').text($('#apellido').val());
+    $('#previewCedula').text($('#cedula').val());
+    $('#previewParentesco').text('#parentesco');
+    $('#previewProfesion').text($('#profesion').val());
+    $('#previewDireccion').text($('#direccion').val());
+    $('#previewDireccion_tra').text($('#direccion_tra').val());
+    $('#previewTelefono').text('#telefono').val());
+    $('#previewTelefono_tra').text($('#telefono_tra').val());
+    $('#previewVive').text($('#vive').val());
+    $('#previewTelefono_opc').text($('#telefono_opc').val());
+    $('#previewEstado').text('#state').val());
+    $('#previewCiudad').text('#ciudad_select').val());
+    $('#previewMunicipio').text('#municipio_select').val());
+    $('#previewParroquia').text('#parroquia_select').val());
+    $('#previewModal').modal('show');
+
+    // Handle modal buttons
+    $('#previewModal').on('click', '#editButton', function() {
+      $('#previewModal').modal('hide'); // Hide modal
+    });
+    $('#previewModal').on('click', '#submitButton', function() {
+      // Submit form using AJAX
+      $.ajax({
+        url: 'process.php',
+        type: 'POST',
+        data: formData,
+        success: function(response) {
+          alert('Form submitted successfully!');
+          $('#previewModal').modal('hide'); // Hide modal
+        },
+        error: function() {
+          alert('An error occurred. Please try again.');
+        }
+      });
+    });
+  });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*const miFormulario = document.getElementById('miFormulario');
 const enviarBtn = document.getElementById('modal-enviar-btn');
 miFormulario.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -42,6 +106,6 @@ document.getElementById('modal-enviar-btn').addEventListener('click', function()
     // Si hubo un error al enviar los datos, mostrar un mensaje de error
     alert('Hubo un error al enviar los datos.');
   });
-});
+});*/
 
 
