@@ -1,5 +1,6 @@
 <?php
-require_once 'basedata/basedata2.php';
+
+require_once '../basedata/db.php';
 
 $estados = $conn->query("SELECT * FROM estados"); 
 $ciudades = $conn->query("SELECT * FROM ciudades"); 

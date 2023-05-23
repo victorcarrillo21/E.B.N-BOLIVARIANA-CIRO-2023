@@ -1,11 +1,11 @@
 <?php 
 
-require_once 'basedata/basedata2.php';
+require_once '../basedata/db.php';
 
-$estados = $conn->query("SELECT * FROM estados"); 
-$ciudades = $conn->query("SELECT * FROM ciudades"); 
-$municipios = $conn->query("SELECT * FROM municipios"); 
-$parroquias = $conn->query("SELECT * FROM parroquias");
+$estados = $conn_pdo->query("SELECT * FROM estados"); 
+$ciudades = $conn_pdo->query("SELECT * FROM ciudades"); 
+$municipios = $conn_pdo->query("SELECT * FROM municipios"); 
+$parroquias = $conn_pdo->query("SELECT * FROM parroquias");
 
 $message = '';
 
@@ -13,7 +13,7 @@ if (!empty($_POST['r_nombre'])){
 /// Consulta preparada con PDO
 $sql2 = "INSERT INTO representante (r_nombre, r_apellido, cedula, profesion,  parentesco, direccion, direccion_trabajo, telefono, telefono_trabajo, vive, telefono_opcional, id_estado, id_ciudad, id_municipio, id_parroquia, correo_electronico)
 VALUES (:r_nombre, :r_apellido, :cedula, :profesion, :parentesco, :direccion, :direccion_trabajo, :telefono, :telefono_trabajo, :vive, :telefono_opcional, :id_estado, :id_ciudad, :id_municipio, :id_parroquia, :correo_electronico)";
-$stmt = $conn->prepare($sql);
+$stmt = $conn_pdo->prepare($sql);
 $stmt->bindParam(':r_nombre', $_POST['r_nombre']);
 $stmt->bindParam(':r_apellido', $_POST['apellido']);
 $stmt->bindParam(':cedula', $_POST['cedula']);

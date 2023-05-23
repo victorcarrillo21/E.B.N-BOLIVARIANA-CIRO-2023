@@ -1,6 +1,7 @@
 <?php
 
-require_once 'basedata/basedata2.php';
+
+require_once '../basedata/db.php';
 
 $message = '';
 

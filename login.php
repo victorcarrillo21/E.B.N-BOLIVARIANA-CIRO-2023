@@ -3,31 +3,32 @@ session_start();
 
 // Si el usuario ya ha iniciado sesión, redirigir a la página de inicio
 if (isset($_SESSION['users_id'])) {
-    header('Location: index.php');
-    exit;
+  header('Location: index.php'); 
 }
 
 // Conexión a la base de datos
-require 'basedata/basedata1.php';
+require_once 'basedata/db.php';
 
 // Manejar el inicio de sesión
-if(isset($_POST['usuario']) && isset($_POST['clave'])) {
+if(!empty($_POST['corro_electronico']) && !empty($_POST['clave'])) {
+
     // Buscar al usuario en la base de datos
-    $stmt = $conn->prepare('SELECT id, nombre, clave, nivel FROM users WHERE nombre = :nombre');
-    $stmt->bindParam(':nombre', $_POST['usuario']);
+    $stmt = $conn->prepare('SELECT id, corro_electronico, contrasena FROM users WHERE corro_electronico = :corro_electronico');
+    $stmt->bindParam(':corro_electronico', $_POST['corro_electronico']);
     $stmt->execute();
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Verificar si las credenciales son válidas
-    if ($user && password_verify($_POST['clave'], $user['clave'])) {
+ 
+    $message = '';
+
+   // Verificar si las credenciales son válidas
+    if ($user > 0 && password_verify($_POST['clave'], $user['contrasena'])) {
         // Guardar el ID de usuario y nivel en la sesión
         $_SESSION['users_id'] = $user['id'];
-        $_SESSION['users_nivel'] = $user['nivel'];
-
         // Redirigir al usuario a la página de inicio
         header('Location: index.php');
-        exit;
     } else {
+
         // Mostrar un mensaje de error si las credenciales son inválidas
         $message = 'Usuario o contraseña incorrectos';
     }
@@ -69,14 +70,16 @@ if(isset($_POST['usuario']) && isset($_POST['clave'])) {
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">¡Bienvenido de nuevo!</h1>
                   </div>
-                  <?php if(!empty($message)): ?>
-                    <div class="alert alert-danger" role="alert">
-                      <?= $message; ?>
-                    </div>
+                  <form class="user" action="index.php" method="POST">
+
+                    <?php if(!empty($message)): ?>
+                      <div class="alert alert-danger" role="alert">
+                        <?= $message; ?>
+                      </div>
+
                   <?php endif; ?>
-                  <form class="user" action="login.php" method="POST">
                     <div class="form-group">
-                      <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Ingrese su correo electrónico..." name="correo_electronico">
+                      <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Ingrese su correo electrónico..." name="corro_electronico">
                     </div>
                     <div class="form-group">
                       <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Contraseña" name="clave">

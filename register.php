@@ -1,3 +1,44 @@
+<?php
+
+    require_once 'basedata/db.php';
+
+    $message = '';
+
+    if (!empty($_POST['clave']) && !empty($_POST['confirm_clave'])) {
+        $contrasena = $_POST['clave'];
+        $confirmcontrasena = $_POST['confirm_clave']; 
+
+        if ($confirmcontrasena == $contrasena) {
+            if (!empty($_POST['usuario']) && !empty($_POST['clave']) && !empty($_POST['corro_electronico'])) {
+                $sql = "INSERT INTO users (usuario, corro_electronico, contrasena, nivel) VALUES (:usuario, :corro_electronico, :contrasena, :nivel)";
+                $stmt = $conn->prepare($sql);
+                $stmt->bindParam(':usuario',$_POST['usuario']);
+                $stmt->bindParam(':corro_electronico',$_POST['corro_electronico']);
+                $password = password_hash($contrasena, PASSWORD_BCRYPT);
+                $stmt->bindParam(':contrasena',$password);
+                
+                if (!empty($_POST['dire'])) {
+                    $dire = $_POST['dire'];
+                    $nivel = 'A';
+                    $stmt->bindParam(':nivel',$nivel);
+
+                } else if (!empty($_POST['secre'])) {
+                    $secre = $_POST['secre'];
+                    $nivel = 'I';
+                    $stmt->bindParam(':nivel',$nivel); 
+                }
+
+                if($stmt->execute()) {
+                    $message = 'registrado con exito, usuario creado';
+                } else {
+                    $message = 'Lo siento, no se pudo registrar por un error.';
+                }
+            }
+        } else {
+            $message = 'Error, las contraseñas no son iguales.';
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +50,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Register</title>
+    <title>Registro</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -36,48 +77,49 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                             </div>
-                            <form class="user">
+
+                            <form class="user" action="register.php" method="POST">
+
+                                <?php if(!empty($message)): ?>
+                                <p><?= $message ?></p>
+                                <?php endif; ?>
+
                                 <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                                            placeholder="First Name">
-                                    </div>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" id="exampleLastName"
-                                            placeholder="Last Name">
+                                        <input name="usuario" type="text" class="form-control form-control-user" 
+                                            placeholder="Nombre" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" id="exampleInputEmail"
-                                        placeholder="Email Address">
+                                    <input name="corro_electronico" type="email" class="form-control form-control-user" 
+                                        placeholder="Gmail" required>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="password" class="form-control form-control-user"
-                                            id="exampleInputPassword" placeholder="Password">
+                                        <input name="clave" type="password" class="form-control form-control-user"
+                                            placeholder="Contraseña" required>
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="password" class="form-control form-control-user"
-                                            id="exampleRepeatPassword" placeholder="Repeat Password">
+                                        <input name="confirm_clave" type="password" class="form-control form-control-user"
+                                             placeholder="Confirmar Contraseña" required>
                                     </div>
                                 </div>
-                                <a href="login.php" class="btn btn-primary btn-user btn-block">
-                                    Register Account
-                                </a>
-                                <hr>
-                                <a href="index.php" class="btn btn-google btn-user btn-block">
-                                    <i class="fab fa-google fa-fw"></i> Register with Google
-                                </a>
-                                <a href="index.php" class="btn btn-facebook btn-user btn-block">
-                                    <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
-                                </a>
+                                <div class="form">
+                                    <label> Nivel de Usuario </label>
+                                <br>
+                                    <input type="checkbox" name="dire">
+                                    <label> Director(a) </label>
+                                    <input type="checkbox" name="secre">
+                                    <label> Secretario(a) </label>
+                                </div>
+                                    <input type="submit" value="registrar cuenta" class="btn btn-primary btn-user btn-block">
                             </form>
                             <hr>
                             <div class="text-center">
                                 <a class="small" href="forgot-password.php">Forgot Password?</a>
                             </div>
                             <div class="text-center">
-                                <a class="small" href="login.php">Already have an account? Login!</a>
+                                <a class="small" href="login.php">Inicia Sesion</a>
                             </div>
                         </div>
                     </div>

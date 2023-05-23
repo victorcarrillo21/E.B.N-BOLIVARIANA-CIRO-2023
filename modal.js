@@ -1,27 +1,15 @@
 $(document).ready(function() {
   // Handle form submission
-  $('#miFormulario').submit(function(event) {
+  $('#myForm').submit(function(event) {
     event.preventDefault(); // Prevent form from submitting normally
 
     // Get form data
     var formData = $(this).serialize();
 
     // Display preview in modal
-    $('#previewNombre').text($('#nombre').val());
-    $('#previewApellido').text($('#apellido').val());
-    $('#previewCedula').text($('#cedula').val());
-    $('#previewParentesco').text('#parentesco');
-    $('#previewProfesion').text($('#profesion').val());
-    $('#previewDireccion').text($('#direccion').val());
-    $('#previewDireccion_tra').text($('#direccion_tra').val());
-    $('#previewTelefono').text('#telefono').val());
-    $('#previewTelefono_tra').text($('#telefono_tra').val());
-    $('#previewVive').text($('#vive').val());
-    $('#previewTelefono_opc').text($('#telefono_opc').val());
-    $('#previewEstado').text('#state').val());
-    $('#previewCiudad').text('#ciudad_select').val());
-    $('#previewMunicipio').text('#municipio_select').val());
-    $('#previewParroquia').text('#parroquia_select').val());
+    $('#previewName').text($('#name').val());
+    $('#previewEmail').text($('#email').val());
+    $('#previewMessage').text($('#message').val());
     $('#previewModal').modal('show');
 
     // Handle modal buttons
@@ -45,7 +33,6 @@ $(document).ready(function() {
     });
   });
 });
-
 
 
 

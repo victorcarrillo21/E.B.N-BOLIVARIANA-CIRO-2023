@@ -4,7 +4,7 @@ $usuario = 'root';
 $contraseña = '';
 
 try {
-    $conexion = new PDO($dsn, $usuario, $contraseña);
+    $conn_pdo = new PDO($dsn, $usuario, $contraseña);
     // echo "conectado exitosamente";
 } catch (PDOException $e) {
     echo 'Error al conectar a la base de datos: ' . $e->getMessage();
