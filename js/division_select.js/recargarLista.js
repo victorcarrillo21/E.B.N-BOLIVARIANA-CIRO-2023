@@ -8,7 +8,7 @@
             recargaMunicipios(); // Llamamos a la función para actualizar el select de municipios
         }
     });
-}
+
 
 function recargaMunicipios() {
     $.ajax({

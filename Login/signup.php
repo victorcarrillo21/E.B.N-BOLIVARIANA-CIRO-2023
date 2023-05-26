@@ -1,7 +1,7 @@
 <?php
     require_once "Vista/parte_superior.php";
 
-    require 'basedata/db.php';
+    require '../../basedata/db.php';
 
     $message = '';
 

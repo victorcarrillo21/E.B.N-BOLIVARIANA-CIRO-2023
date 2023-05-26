@@ -1,13 +1,3 @@
-
-<?php
-/*MOSTRAR ERRORES
-*/
-//ini_set('display_errors', 0); // coloca 0 si no deseas que aparezcan los errores tambien en el navegador
-//ini_set("log_errors", 1); //con esta linea estamos diciendo que queremos crear un nuevo archivo de errores
-//ini_set("error_log", "C:/xampp/htdocs/Errores CIRO 2023/php_error_log"); //con esta linea le decimos a PHP donde queremos que se guarde ese archivo,lo recomendado es que sea al lado del archivo
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,27 +11,21 @@
 
     <title>SB Admin 2 - Buttons</title>
 
-    <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+      <!-- Custom fonts for this template-->
+      <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.css" rel="stylesheet">
+    <link href="../../css/sb-admin-2.css" rel="stylesheet">
 
     <!--SCRIPT DEL PROFESOR-->
    <!-- <link rel="stylesheet" href="sweetalert2.min.css">-->
 
-
 </head>
 
 <body id="page-top">
-    <!--SCRIPT DEL PROFESOR-->
-<!--<script src="sweetalert2.min.js"></script>
-<script src="sweetalert2.all.min.js"></script>-->
-
-
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -93,12 +77,10 @@
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="salud_transporte.php" data-toggle="collapse" data-target="#collapseUtilities"
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
-                    <span>SALUD Y TRANSPORTE</span>
+                    <span>SALUD</span>
                 </a>
-
-                <!--
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
@@ -109,7 +91,7 @@
                         <a class="collapse-item" href="utilities-other.php">Other</a>
                     </div>
                 </div>
-            </li> -->
+            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -120,12 +102,12 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-       <!--     <li class="nav-item">
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <span>TRANSPORTE</span>
-                </a> -->
-         <!--           <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Login Screens:</h6>
                         <a class="collapse-item" href="login.php">Login</a>
@@ -137,11 +119,11 @@
                         <a class="collapse-item" href="blank.php">Blank Page</a>
                     </div>
                 </div>
-            </li>-->
+            </li>
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="persecucion.php">
+                <a class="nav-link" href="charts.php">
                     <span>PERSECUCION</span></a>
             </li>
 
@@ -229,249 +211,104 @@
                     </ul>
 
                 </nav>
-                <!-- End of Topbar -->
 
-                <!-- Begin Page Content -->
-                <?php 
-ob_start(); // Iniciar el buffer de salida
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "basededatos_ciroo";
+<?php
+        require_once "../../basedata/basedata1.php";
 
-try {
-    $conn_pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    $conn_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $resultado="";
 
-    // Obtener datos para los select
-    $estados = $conn_pdo->query("SELECT id_estado, estado FROM estados"); 
-    $ciudades = $conn_pdo->query("SELECT id_ciudad, id_estado, ciudad FROM ciudades"); 
-    $municipios = $conn_pdo->query("SELECT id_municipio, id_estado, municipio FROM municipios"); 
-    $parroquias = $conn_pdo->query("SELECT id_parroquia ,id_municipio, parroquia FROM parroquias");
 
-    // Verificación del envío de formulario
-    if (!empty($_POST)) {
-        $message = '';
+        $representante="SELECT * FROM representante";
 
-        // Validar datos del formulario
-        if (empty($_POST['nombre'])) {
-            $message = "El campo 'nombre' es obligatorio. Por favor, complete el campo y vuelva a intentarlo.";
-        } else {
-            // Preparar consulta SQL
-            $sql = "INSERT INTO representante (nombre, apellido, cedula, parentesco, profesion, direccion, direccion_tra, telefono, telefono_tra, vive, telefono_opc, id_estado, id_ciudad, id_municipio, id_parroquia) VALUES (:nombre, :apellido, :cedula, :parentesco, :profesion, :direccion, :direccion_tra, :telefono, :telefono_tra, :vive, :telefono_opc, :id_estado, :id_ciudad, :id_municipio, :id_parroquia)";
 
-            // Preparar consulta preparada
-            $stmt = $conn_pdo->prepare($sql);
-
-            // Obtención de valores de formulario
-            $nombre = isset($_POST['nombre']) ? $_POST['nombre'] : "";
-            $apellido = isset($_POST['apellido']) ? $_POST['apellido'] : "";
-            $cedula = isset($_POST['cedula']) ? $_POST['cedula'] : "";
-            $parentesco = isset($_POST['parentesco']) ? $_POST['parentesco'] : "";
-            $profesion = isset($_POST['profesion']) ? $_POST['profesion'] : "";
-            $direccion = isset($_POST['direccion']) ? $_POST['direccion'] : "";
-            $direccion_tra = isset($_POST['direccion_tra']) ? $_POST['direccion_tra'] : "";
-            $telefono = isset($_POST['telefono']) ? $_POST['telefono'] : "";
-            $telefono_tra = isset($_POST['telefono_tra']) ? $_POST['telefono_tra'] : "";
-            $vive = isset($_POST['vive']) ? $_POST['vive'] : "";
-            $telefono_opc = isset($_POST['telefono_opc']) ? $_POST['telefono_opc'] : "";
-            $id_estado = isset($_POST['estado']) ? $_POST['estado'] : "";
-            $id_ciudad = isset($_POST['ciudad']) ? $_POST['ciudad'] : "";
-            $id_municipio = isset($_POST['municipio']) ? $_POST['municipio'] : "";
-            $id_parroquia = isset($_POST['parroquia']) ? $_POST['parroquia'] : "";
-            // Vincular parámetros
-            $stmt->bindParam(':nombre', $nombre);
-            $stmt->bindParam(':apellido', $apellido);
-            $stmt->bindParam(':cedula', $cedula);
-            $stmt->bindParam(':parentesco', $parentesco);
-            $stmt->bindParam(':profesion', $profesion);
-            $stmt->bindParam(':direccion', $direccion);
-            $stmt->bindParam(':direccion_tra', $direccion_tra);
-            $stmt->bindParam(':telefono', $telefono);
-            $stmt->bindParam(':telefono_tra', $telefono_tra);
-            $stmt->bindParam(':vive', $vive);
-            $stmt->bindParam(':telefono_opc', $telefono_opc);
-            $stmt->bindParam(':id_estado', $id_estado);
-            $stmt->bindParam(':id_ciudad', $id_ciudad);
-            $stmt->bindParam(':id_municipio', $id_municipio);
-            $stmt->bindParam(':id_parroquia', $id_parroquia);
-
-            // Ejecutar consulta preparada
-            if ($stmt->execute()) {
-                $message = "Representante registrado exitosamente.";
-            } else {
-                $message = "Error al registrar al representante. Por favor, inténtelo de nuevo.";
-            }
-        }
-    }
-
-    // Cerrar conexión PDO
-    $conn_pdo = null;
-} catch(PDOException $e) {
-    echo "Error: " . $e->getMessage();
-}
-
-// Limpiar buffer de salida
-ob_end_flush();
 ?>
-<!-- Aquí va el código HTML del formulario -->
-
-           <!--INICIO del cont principal-->
-           <div class="container">
-           
-            <h1 class="cir">Contenido principal</h1>
-
-
-
-            <div class="container">
-
-    <h1 class="text-center mb-5">Registro de datos</h1>
-
-
-    
-
-    <?php 
-  // Definir la opción seleccionada por defecto
-  $opcion_seleccionada = "opcion2";
-?>
-<!--<form action="representante.php" method="post" id="miFormulario" enctype="multipart/form-data"> -->
-
-<form id="miFormulario"> 
-  <div class="form-group">
-    <label for="nombre">Nombre:</label>
-    <input type="text" name="nombre" id="nombre" class="form-control" maxlength="50" required>
-  </div>
-
-  <div class="form-group">
-    <label for="apellido">Apellido:</label>
-    <input type="text" name="apellido" id="apellido" class="form-control" maxlength="50" required>
-  </div>
-
-  <div class="form-group">
-    <label for="cedula">CEDULA:</label>
-    <input type="number" name="cedula" id="cedula" class="form-control" maxlength="20" required>
-  </div>
-
-  <div class="form-group">
-    <label for="parentesco">Parentesco:</label>
-    <select name="parentesco" id="parentesco" class="form-control" required>
-      <option value="opcion1">Padre</option>
-      <option value="opcion2" <?php if ($opcion_seleccionada == "opcion2") echo "selected"; ?>>Madre (seleccionada por defecto)</option>
-      <option value="opcion3">Otros</option>
-    </select>
-    
-  </div>
-  <div class="form-group">
-    <label for="profesion">Profesion:</label>
-    <input type="text" name="profesion" id="profesion" class="form-control" maxlength="100" required>
-  </div>
-
-  <div class="form-group">
-    <label for="direccion">Dirección:</label>
-    <input type="text" name="direccion" id="direccion" class="form-control" maxlength="100" required>
-  </div>
-
-  <div class="form-group">
-    <label for="direccion_tra">Dirección del Trabajo:</label>
-    <input type="text" name="direccion_tra" id="direccion_tra" class="form-control" maxlength="100" required>
-  </div>
-
-  <div class="form-group">
-    <label for="telefono">Telefono:</label>
-    <input type="number" name="telefono" id="telefono" class="form-control" required>
-  </div>
-
-  <div class="form-group">
-    <label for="telefono_tra">Telefono del Trabajo:</label>
-    <input type="number" name="telefono_tra"id="telefono_tra"class="form-control" required>
-  </div>
-
-  <div class="form-group">
-    <label for="telefono_opc">Telefono Opcional:</label>
-    <input type="number" name="telefono_opc" id="telefono_opc"class="form-control">
-  </div>
-
-  <div class="form-group">
-    <label for="vive">¿Vive?</label>
-    <input type="checkbox"  name="si" id="vive">
-    <label>Si</label>
-    <input type="checkbox" name="no" id="vive">
-    <label>No</label>
-  </div>
-
-<!-- INICIO DEL SELECT DINAMICO, RECUERDAD QUÉ EL SELECT PRINCIPAL ES ESTADO LUEGO CIUDAD -->
-<?php require_once 'basedata/basedata1.php'; ?>
-
-<div class="form-group">
-  <label for="estados">Estado:</label>
-  <select name="estado" id="state" data-state="state" class="form-select select_representante" required> 
-    <option value="">Seleccione una opción</option>
-    <?php 
-      $stmt = $conn_pdo->query('SELECT * FROM estados');
-      if ($stmt) {
-        foreach ($stmt as $row) {
-          echo '<option value="' . $row['id_estado'] . '">' . $row['estado'] . '</option>';
-        }
-      }
-    ?>
-  </select>
-</div>
-
-<div class="form-group">
-  <label for="ciudad_select">Ciudad:</label>
-  <select name="ciudad" id="ciudad_select" class="form-select select_representante" required>
-    <option value="0">eliga la ciudad</option>
-   
-  </select>
-</div>
-
-<div class="form-group">
-  <label for="municipio">Municipio:</label>
-  <select name="municipio" id="municipio_select" class="form-select select_representante" required>
-    <option value="">Seleccione una opción</option>
-    <?php 
-      $stmt = $conn_pdo->query('SELECT * FROM municipios');
-      if ($stmt) {
-        foreach ($stmt as $row) {
-          echo '<option value="' . $row['id_municipio'] . '">' . $row['municipio'] . '</option>';
-        }
-      }
-    ?>
-  </select>
-</div>
-
-<div class="form-group">
-  <label for="parroquia">Parroquia:</label>
-  <select name="parroquia" id="parroquia_select" class="form-select select_representante">
-    <option value="">Seleccione una opción</option>
-    <?php 
-      $stmt = $conn_pdo->query('SELECT * FROM parroquias');
-      if ($stmt) {
-        foreach ($stmt as $row) {
-          echo '<option value="' . $row['id_parroquia'] . '">' . $row['parroquia'] . '</option>';
-        }
-      }
-    ?>
-  </select>
-</div>
-<button class="btn btn-danger" type="button" name="enviar" id="permiteSubmit" data-bs-toggle="modal" data-bs-target="#myModal">Guardar Datos</button>
-
-<?php include 'modal_data.php'; ?>
-
-</form>
-</div>
- </div>
-
-  <script src="modal.js"></script>
-  <script src="app.js"></script>
-
-
- 
+                <div class="container">
+  <div class="row">
+    <div class="col">
+        <div class="table-wrapper"> 
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Cédula</th>
+            <th>Parentesco</th>
+            <th>Profesión</th>
+            <th>Dirección</th>
+            <th>Dirección de trabajo</th>
+            <th>Teléfono</th>
+            <th>Teléfono de trabajo</th>
+            <th>Vive</th>
+            <th>Teléfono opcional</th>
+            <th>Estado</th>
+            <th>Ciudad</th>
+            <th>Municipio</th>
+            <th>Parroquia</th>
+          </tr>
+        </thead>
+        <tbody>
             
-  
+          <?php $resultado = mysqli_query($conn, $representante);
+
+          while($row=mysqli_fetch_assoc($resultado)){ ?>
+          <tr>
+            <td><?php echo $row["nombre"]; ?></td>
+            <td><?php echo $row["apellido"]; ?></td>
+            <td><?php echo $row["cedula"]; ?></td>
+            <td><?php echo $row["parentesco"]; ?></td>
+            <td><?php echo $row["profesion"]; ?></td>
+            <td><?php echo $row["direccion"]; ?></td>
+            <td><?php echo $row["direccion_tra"]; ?></td>
+            <td><?php echo $row["telefono"]; ?></td>
+            <td><?php echo $row["telefono_tra"]; ?></td>
+            <td><?php echo $row["vive"]; ?></td>
+            <td><?php echo $row["telefono_opc"]; ?></td>
+            <td><?php echo $row["id_estado"]; ?></td>
+            <td><?php echo $row["id_ciudad"]; ?></td>
+            <td><?php echo $row["id_municipio"]; ?></td>
+            <td><?php echo $row["id_parroquia"]; ?></td>
+          </tr>
+          <?php } ?>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+
+
+
  
-            <!-- Footer -->
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                 <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
@@ -513,19 +350,21 @@ ob_end_flush();
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
+      <!-- Bootstrap core JavaScript-->
    <!--Bootstrap 3-5-2023--> <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+   <script src="../../vendor/jquery/jquery.min.js"></script>
+   <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <script src="../../js/sb-admin-2.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
- 
+
 </body>
 
 </html>
+ 
+             

@@ -1,16 +1,18 @@
-</div>
-   <!-- Footer -->
-   <footer class="sticky-footer bg-white">
+ 
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+            </div>
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                        <span>Copyright &copy; Your Website 2020</span>
                     </div>
                 </div>
             </footer>
             <!-- End of Footer -->
-
-                              
-
 
         </div>
         <!-- End of Content Wrapper -->
@@ -37,26 +39,26 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.php">Logout</a>
+                    <a class="btn btn-primary" href="../../Login/login.php">Logout</a>
                 </div>
             </div>
         </div>
     </div>
 
-     <!-- Bootstrap core JavaScript-->
+    <!-- Bootstrap core JavaScript-->
    <!--Bootstrap 3-5-2023--> <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-   <script src="vendor/jquery/jquery.min.js"></script>
-   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+   <script src="../../vendor/jquery/jquery.min.js"></script>
+   <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <script src="../js/sb-admin-2.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script type="text/javascript" src="vendor/datatables/datatables.min.js"></script>    
+    <script type="text/javascript" src="../../vendor/datatables/datatables.min.js"></script>    
    
 
 </body>
