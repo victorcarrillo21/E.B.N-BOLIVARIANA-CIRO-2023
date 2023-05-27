@@ -9,7 +9,7 @@ $message = '';
 // LAS VARIABLES QUÉ USAN ANGEL SON sql4 para insert y prepare sql4
 
 if(!empty($_POST['alergia'])) {
-    $conn_pdo = "INSERT INTO salud ( alergia, dieta, tratamiento_M, condicion_fisica, atencion_especial) 
+    $conn_pdo = "INSERT INTO salud_alumno ( alergia, dieta, tratamiento_M, condicion_fisica, atencion_especial) 
     VALUES (:alergia, :dieta, :tratamiento_M, :condicion_fisica, :atencion_especial)";
     $stmt = $conn->prepare($conn_pdo);
     if (!$stmt) {

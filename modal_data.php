@@ -11,7 +11,7 @@
      href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
     rel="stylesheet">
 
-
+    
     <link href="css/sb-admin-2.css" rel="stylesheet">
 </head>
 <body>
@@ -26,7 +26,7 @@
       </div>
       <div class="modal-body">
         <div class="form-group">
-          <label for="modal-nombre">Nombre:</label>
+          <label for="modal-nombre">Nombre</label>
           <input type="text" class="form-control" id="modal-nombre" readonly>
         </div>
         <div class="form-group">
@@ -65,9 +65,17 @@
           <label for="modal-telefono-opcional">Teléfono opcional:</label>
           <input type="text" class="form-control" id="modal-telefono-opcional" readonly>
         </div>
-        <div class="form-group">
-          <label for="modal-vive">¿Vive?</label>
-          <input type="text" class="form-control" id="modal-vive" readonly>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="vive" id="modal-vive-si" value="Si">
+          <label class="form-check-label" for="modal-vive-si">
+            Sí
+        </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="vive" id="modal-vive-no" value="No">
+          <label class="form-check-label" for="modal-vive-no">
+          No
+        </label>
         </div>
         <div class="form-group">
           <label for="modal-estado">Estado:</label>
@@ -106,7 +114,7 @@
   </div>
 </div>
 
-<script src="modal.js"></script>
+ 
 
   <!-- Bootstrap core JavaScript-->
    <!--Bootstrap 3-5-2023--> <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

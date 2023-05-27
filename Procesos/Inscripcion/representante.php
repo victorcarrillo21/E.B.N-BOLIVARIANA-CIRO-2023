@@ -21,26 +21,34 @@
 
     <title>SB Admin 2 - Buttons</title>
 
-    <!-- Custom fonts for this template-->
-    <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
+<!-- Custom fonts for this template-->
+
+ 
+ 
+
+
+   <!-- Custom fonts for this template-->
+     
+   <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
+   <!-- Custom fonts for this template-->
+   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+ 
     <!-- Custom styles for this template-->
-    <link href="../../css/sb-admin-2.css" rel="stylesheet">
+    <link href="../../css/ebn.css" rel="stylesheet">
+   <!-- <link href="../../css/sb-admin-2.css" rel="stylesheet">-->
 
-    <!--SCRIPT DEL PROFESOR-->
-   <!-- <link rel="stylesheet" href="sweetalert2.min.css">-->
+   
+   
 
+   
 
 </head>
 
 <body id="page-top">
-    <!--SCRIPT DEL PROFESOR-->
-<!--<script src="sweetalert2.min.js"></script>
-<script src="sweetalert2.all.min.js"></script>-->
-
+     
 
 
     <!-- Page Wrapper -->
@@ -97,19 +105,7 @@
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <span>SALUD Y TRANSPORTE</span>
                 </a>
-
-                <!--
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="utilities-color.php">Colors</a>
-                        <a class="collapse-item" href="utilities-border.php">Borders</a>
-                        <a class="collapse-item" href="utilities-animation.php">Animations</a>
-                        <a class="collapse-item" href="utilities-other.php">Other</a>
-                    </div>
-                </div>
-            </li> -->
+ 
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -118,26 +114,7 @@
             <div class="sidebar-heading">
                 Addons
             </div>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-       <!--     <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <span>TRANSPORTE</span>
-                </a> -->
-         <!--           <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.php">Login</a>
-                        <a class="collapse-item" href="registphp">Register</a>
-                        <a class="collapse-item" href="forgot-password.php">Forgot Password</a>
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.php">404 Page</a>
-                        <a class="collapse-item" href="blank.php">Blank Page</a>
-                    </div>
-                </div>
-            </li>-->
+ 
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
@@ -201,7 +178,7 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
                                 <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                    src="../../img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -337,10 +314,10 @@ ob_end_flush();
 ?>
 <!--<form action="representante.php" method="post" id="miFormulario" enctype="multipart/form-data"> -->
 
-<form id="miFormulario"> 
+<form id="myForm"> 
   <div class="form-group">
     <label for="nombre">Nombre:</label>
-    <input type="text" name="nombre" id="nombre" class="form-control" maxlength="50" required>
+    <input type="text" name="nombre" id="nombre" class="form-control" maxlength="50"  required>
   </div>
 
   <div class="form-group">
@@ -392,13 +369,17 @@ ob_end_flush();
     <input type="number" name="telefono_opc" id="telefono_opc"class="form-control">
   </div>
 
+  
   <div class="form-group">
-    <label for="vive">¿Vive?</label>
-    <input type="checkbox"  name="si" id="vive">
-    <label>Si</label>
-    <input type="checkbox" name="no" id="vive">
-    <label>No</label>
+  <label for="vive">¿Vive?</label>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="vive" id="vive-si" value="Si">
+    <label class="form-check-label" for="vive-si">Si</label>
   </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="vive" id="vive-no" value="No">
+    <label class="form-check-label" for="vive-no">No</label>
+
 
 <!-- INICIO DEL SELECT DINAMICO, RECUERDAD QUÉ EL SELECT PRINCIPAL ES ESTADO LUEGO CIUDAD -->
 <?php require_once '../../basedata/basedata1.php'; ?>
@@ -455,16 +436,22 @@ ob_end_flush();
     ?>
   </select>
 </div>
-<button class="btn btn-danger" type="button" name="enviar" id="permiteSubmit" data-bs-toggle="modal" data-bs-target="#myModal">Guardar Datos</button>
 
-<?php include '../../modal_data.php'; ?>
 
+<button type="submit" class="btn btn-primary vh-1" value="Guardar" name="Guardar" id="submitBtn">Guardar</button>
+
+ 
+ 
 </form>
 </div>
- </div>
+</div>
+<script src='../../modal.js'></script>
+<script src='../../app.js'></script>
+ 
+ 
 
-  <script src="modal.js"></script>
-  <script src="app.js"></script>
+ <?php require_once '../../modal_data.php'?>
+
 
 
  
@@ -513,19 +500,23 @@ ob_end_flush();
         </div>
     </div>
 
+ 
     <!-- Bootstrap core JavaScript-->
    <!--Bootstrap 3-5-2023--> <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-   <script src="../../vendor/jquery/jquery.min.js"></script>
-   <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+   <script src="vendor/jquery/jquery.min.js"></script>
+   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="../../js/sb-admin-2.min.js"></script>
+    <script src="js/sb-admin-2.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
- 
+
+     
+
+
 </body>
 
 </html>
