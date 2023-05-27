@@ -9,7 +9,7 @@
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
 
@@ -32,9 +32,9 @@
    <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-
+    
    <!-- Custom fonts for this template-->
-   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+   <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
  
     <!-- Custom styles for this template-->
     <link href="../../css/ebn.css" rel="stylesheet">
@@ -316,7 +316,7 @@ ob_end_flush();
 
 <form id="myForm"> 
   <div class="form-group">
-    <label for="nombre">Nombre:</label>
+    <label for="nombre_nuevo">Nombre:</label>
     <input type="text" name="nombre" id="nombre" class="form-control" maxlength="50"  required>
   </div>
 
@@ -326,12 +326,12 @@ ob_end_flush();
   </div>
 
   <div class="form-group">
-    <label for="cedula">CEDULA:</label>
+    <label for="cedula_nuevo">CEDULA:</label>
     <input type="number" name="cedula" id="cedula" class="form-control" maxlength="20" required>
   </div>
 
   <div class="form-group">
-    <label for="parentesco">Parentesco:</label>
+    <label for="parentesco_nuevo">Parentesco:</label>
     <select name="parentesco" id="parentesco" class="form-control" required>
       <option value="opcion1">Padre</option>
       <option value="opcion2" <?php if ($opcion_seleccionada == "opcion2") echo "selected"; ?>>Madre (seleccionada por defecto)</option>
@@ -340,7 +340,7 @@ ob_end_flush();
     
   </div>
   <div class="form-group">
-    <label for="profesion">Profesion:</label>
+    <label for="profesion_nuevo">Profesion:</label>
     <input type="text" name="profesion" id="profesion" class="form-control" maxlength="100" required>
   </div>
 
@@ -385,7 +385,7 @@ ob_end_flush();
 <?php require_once '../../basedata/basedata1.php'; ?>
 
 <div class="form-group">
-  <label for="estados">Estado:</label>
+  <label for="estados_nuevo">Estado:</label>
   <select name="estado" id="state" data-state="state" class="form-select select_representante" required> 
     <option value="">Seleccione una opción</option>
     <?php 
@@ -400,7 +400,7 @@ ob_end_flush();
 </div>
 
 <div class="form-group">
-  <label for="ciudad_select">Ciudad:</label>
+  <label for="ciudad_select_nuevo">Ciudad:</label>
   <select name="ciudad" id="ciudad_select" class="form-select select_representante" required>
     <option value="0">eliga la ciudad</option>
    
@@ -408,7 +408,7 @@ ob_end_flush();
 </div>
 
 <div class="form-group">
-  <label for="municipio">Municipio:</label>
+  <label for="municipio_nuevo">Municipio:</label>
   <select name="municipio" id="municipio_select" class="form-select select_representante" required>
     <option value="">Seleccione una opción</option>
     <?php 
@@ -423,7 +423,7 @@ ob_end_flush();
 </div>
 
 <div class="form-group">
-  <label for="parroquia">Parroquia:</label>
+  <label for="parroquia_nuevo">Parroquia:</label>
   <select name="parroquia" id="parroquia_select" class="form-select select_representante">
     <option value="">Seleccione una opción</option>
     <?php 
@@ -445,13 +445,13 @@ ob_end_flush();
 </form>
 </div>
 </div>
-<script src='../../modal.js'></script>
-<script src='../../app.js'></script>
+
+ 
+ <script src='../../app.js'></script>
  
  
 
- <?php require_once '../../modal_data.php'?>
-
+ 
 
 
  
@@ -504,17 +504,19 @@ ob_end_flush();
     <!-- Bootstrap core JavaScript-->
    <!--Bootstrap 3-5-2023--> <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-   <script src="vendor/jquery/jquery.min.js"></script>
-   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+   <script src="../../vendor/jquery/jquery.min.js"></script>
+   <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <script src="../../js/sb-admin-2.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-     
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src='../../modal.js'></script>
+
 
 
 </body>

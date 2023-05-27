@@ -2,7 +2,7 @@
 
 
 
-<!--
+
 <script>
 $(document).ready(function() {
 $('#estado').change(function() {
@@ -62,7 +62,7 @@ $('#parroquia').html(response);
 });
 });
 </script>
--->*/ 
+
 
 
 

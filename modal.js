@@ -1,69 +1,100 @@
+$(document).ready(function() {
+  
+  
+  
+  // Agregar evento de escucha al botón "Guardar"
+  $('#submitBtn').click(function(e) {
+    e.preventDefault(); // Prevenir que se envíe el formulario
 
+    
+    
+    // Obtener los valores de los campos del formulario
+    var nombre = $('input[name="nombre"]').val();
+    var apellido = $('input[name="apellido"]').val();
+    var cedula = $('input[name="cedula"]').val();
+    var parentesco = $('#parentesco').val();
+    var profesion = $('input[name="profesion"]').val();
+    var direccion = $('input[name="direccion"]').val();
+    var direccion_tra = $('input[name="direccion_tra"]').val();
+    var telefono = $('input[name="telefono"]').val();
+    var telefono_tra = $('input[name="telefono_tra"]').val();
+    var telefono_opc = $('input[name="telefono_opc"]').val();
+    var vive = $('input[name="vive"]:checked').val();
+    var estado = $('select[name="estado"]').val();
+    var ciudad = $('select[name="ciudad"]').val();
+    var municipio = $('select[name="municipio"]').val();
+    var parroquia = $('select[name="parroquia"]').val();
 
-document.addEventListener("DOMContentLoaded", function(event) {
-const submitBtn = document.getElementById('submitBtn');
-const myForm = document.getElementById('myForm');
+    
+    
+    // Crear una cadena de texto con los valores de los camposdel formulario
+    var modalContent = '<p><strong>Nombre:</strong> ' + nombre + '</p>' +
+                        '<p><strong>Apellido:</strong> ' + apellido + '</p>' +
+                        '<p><strong>Cédula:</strong> ' + cedula + '</p>' +
+                        '<p><strong>Parentesco:</strong> ' + parentesco + '</p>' +
+                        '<p><strong>Profesión:</strong> ' + profesion + '</p>' +
+                        '<p><strong>Dirección:</strong> ' + direccion + '</p>' +
+                        '<p><strong>Dirección de trabajo:</strong> ' + direccion_tra + '</p>' +
+                        '<p><strong>Teléfono:</strong> ' + telefono + '</p>' +
+                        '<p><strong>Teléfono de trabajo:</strong> ' + telefono_tra + '</p>' +
+                        '<p><strong>Teléfono opcional:</strong> ' + telefono_opc + '</p>' +
+                        '<p><strong>¿Vive?:</strong> ' + vive + '</p>' +
+                        '<p><strong>Estado:</strong> ' + estado + '</p>' +
+                        '<p><strong>Ciudad:</strong> ' + ciudad + '</p>' +
+                        '<p><strong>Municipio:</strong> ' + municipio + '</p>' +
+                        '<p><strong>Parroquia:</strong> ' +parroquia + '</p>';
 
-submitBtn.addEventListener('click', function() {
-  const nombre = document.getElementById('nombre').value;
-  console.log(nombre);
+   
+   
+   
+    // Crear el modal y agregar el contenido creado anteriormente
+   
+   
+    var modal = '<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">' +
+                  '<div class="modal-dialog" role="document">' +
+                    '<div class="modal-content">' +
+                      '<div class="modal-header">' +
+                        '<h4 class="modal-title" id="myModalLabel">Confirmar datos</h4>' +
+                        '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span</button>' +
+                      '</div>' +
+                      '<div class="modal-body">' +
+                        modalContent +
+                      '</div>' +
+                      '<div class="modal-footer">' +
+                        '<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>' +
+                        '<button type="button" class="btn btn-primary" id="confirmBtn">Aceptar</button>' +
+                      '</div>' +
+                    '</div>' +
+                  '</div>' +
+                '</div>';
 
-  const apellido = document.getElementById('apellido').value;
-  console.log(nombre);
+    // Agregar el modal al cuerpo del documento
+    $('body').append(modal);
 
-  const cedula = document.getElementById('cedula').value;
-  const parentesco = document.getElementById('parentesco').value;
-  const profesion = document.getElementById('profesion').value;
-  const direccion = document.getElementById('direccion').value;
-  const direccion_tra = document.getElementById('direccion_tra').value;
-  const telefono = document.getElementById('telefono').value;
-  const telefono_tra = document.getElementById('telefono_tra').value; // Corregido
-  const telefono_opc = document.getElementById('telefono_opc').value;
-  const vive = document.querySelector('input[name="vive"]:checked').value; // Seleccionar el valor del elemento de entrada de radio marcado
-  const state = document.getElementById('state').value;
-  const ciudad_select = document.getElementById('ciudad_select').value;
-  const municipio_select = document.getElementById('municipio_select').value;
-  const parroquia_select = document.getElementById('parroquia_select').value;
+    // Mostrar el modal
+    $('#myModal').modal('show');
 
+    // Agregar evento de escucha al botón "Aceptar" del modal
+    $('#confirmBtn').click(function() {
+      
+      // Enviar los datos del formulario a la base de datos utilizando AJAX
+      $.ajax({
+        type: 'POST',
+        url: './basedata/db.php',
+        data: $('#myForm').serialize(), // Obtener los datos del formulario
+        success: function(response) {
+          // Mostrar mensaje de éxito
+          alert('Los datos se han guardado correctamente.');
 
-
-  document.getElementById('modal-nombre').innerHTML = nombre;
-  document.getElementById('modal-apellido').innerHTML = apellido;
-  document.getElementById('modal-cedula').innerHTML = cedula;
-  document.getElementById('modal-parentesco').innerHTML = parentesco;
-  document.getElementById('modal-profesion').innerHTML = profesion;
-  document.getElementById('modal-direccion').innerHTML = direccion;
-  document.getElementById('modal-direccion-trabajo').innerHTML = direccion_tra;
-  document.getElementById('modal-telefono').innerHTML = telefono;
-  document.getElementById('modal-telefono-trabajo').innerHTML = telefono_tra;
-  document.getElementById('modal-telefono-opcional').innerHTML = telefono_opc;
-  document.getElementById('modal-vive').innerHTML = vive;
-  document.getElementById('modal-estado').innerHTML = state;
-  document.getElementById('modal-ciudad').innerHTML = ciudad_select;
-  document.getElementById('modal-municipio').innerHTML = municipio_select;
-  document.getElementById('modal-parroquia').innerHTML = parroquia_select;
-
-  const myModal = new bootstrap.Modal(document.getElementById('myModal'));
-myModal.show();
+          // Cerrar el modal
+          $('#myModal').modal('hide');
+        },
+        error: function() {
+          // Mostrar mensaje de error
+          alert('Hubo un error al guardar los datos.');
+        }
+      });
+    });
+  });
 });
 
-  const enviarBtn = document.getElementById('modal-enviar-btn');
-enviarBtn.addEventListener('click', function() {
-  const xmlhttp = new XMLHttpRequest();
-  const url = "basedata/basedata1.php";
-  const params = "nombre=" + nombre + "&apellido=" + apellido + "&cedula=" + cedula + "&parentesco=" + parentesco +"&profesion=" + profesion + "&direccion=" + direccion + "&direccion_tra=" + direccion_tra + "&telefono=" + telefono + "&telefono_tra=" + telefono_tra + "&telefono_opc=" + telefono_opc + "&vive=" + vive + "&state=" + state + "&ciudad_select=" + ciudad_select + "&municipio_select=" + municipio_select + "&parroquia_select=" + parroquia_select;
-  xmlhttp.open("POST", url, true);
-  xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  xmlhttp.onreadystatechange = function() {
-    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-      console.log(xmlhttp.responseText);
-      // Cerrar el modal después de enviar los datos
-      myModal.hide();
-      // Mostrar el mensaje de éxito
-      document.getElementById('mensaje-exito').style.display = 'block';
-    }
-  };
-  xmlhttp.send(params);
-});
-
-});
