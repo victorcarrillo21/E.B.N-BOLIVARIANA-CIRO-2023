@@ -21,8 +21,7 @@
     <!-- Custom styles for this template-->
     <link href="../../css/sb-admin-2.css" rel="stylesheet">
 
-    <!--SCRIPT DEL PROFESOR-->
-   <!-- <link rel="stylesheet" href="sweetalert2.min.css">-->
+ 
 
 
 </head>

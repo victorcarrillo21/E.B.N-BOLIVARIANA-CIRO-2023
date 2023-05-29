@@ -1,40 +1,65 @@
 <?php
-session_start();
+    require_once '../basedata/db.php';
 
-// Si el usuario ya ha iniciado sesión, redirigir a la página de inicio
-if (isset($_SESSION['users_id'])) {
-  header('Location: index.php'); 
-}
+        session_start();
 
-// Conexión a la base de datos
-require_once '../basedata/db.php';
+        if(isset($_GET['cerrar_sesion'])){ 
 
-// Manejar el inicio de sesión
-if(!empty($_POST['corro_electronico']) && !empty($_POST['clave'])) {
+                session_unset();
 
-    // Buscar al usuario en la base de datos
-    $stmt = $conn->prepare('SELECT id, corro_electronico, contrasena FROM users WHERE corro_electronico = :corro_electronico');
-    $stmt->bindParam(':corro_electronico', $_POST['corro_electronico']);
-    $stmt->execute();
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+                session_destroy();
 
- 
-    $message = '';
 
-   // Verificar si las credenciales son válidas
-    if ($user > 0 && password_verify($_POST['clave'], $user['contrasena'])) {
-        // Guardar el ID de usuario y nivel en la sesión
-        $_SESSION['users_id'] = $user['id'];
-        // Redirigir al usuario a la página de inicio
-        header('Location: index.php');
-    } else {
 
-        // Mostrar un mensaje de error si las credenciales son inválidas
-        $message = 'Usuario o contraseña incorrectos';
-    }
-}
+        }
 
-?>
+            if(isset($_SESSION['rol'])){
+                switch($_SESSION['rol']){
+                            case 1:
+                                header('location: index.php');
+
+                                break;
+
+                                case 2:
+                                    header("location:index_admin.php");
+                                        break;
+
+
+                                    default:
+
+
+                }
+
+            
+            }
+
+                    if(isset($_POST['username']) && isset($_POST['password'])){
+
+                        $username =$_POST['username'];
+                        $password =$_POST['password'];
+
+                        $dsn= new PDO();
+                        $conn_pdo= $dsn->connect()->prepare('SELECT*FROM usuarios WHERE username=:username AND password=:password');
+                        $conn_pdo->execute(['username'=>$username,'password'=>$password]);
+
+                        $row = $conn_pdo->fetch(PDO::FETCH_NUM);
+
+                        if($row == true){
+                            // VALIDACION
+                        }else{
+                                        
+                            echo "el usuario o contraseña son incorrecta";
+                        }
+
+                    }
+
+
+
+    ?>
+
+
+
+
 
 
 <!DOCTYPE html>
@@ -46,8 +71,10 @@ if(!empty($_POST['corro_electronico']) && !empty($_POST['clave'])) {
   <meta name="description" content="">
   <meta name="author" content="">
   <title>SB Admin 2 - Login</title>
- 
   
+  
+                      <!--Sweetaler2-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.6/dist/sweetalert2.min.css">
   
   <!-- Custom fonts for this template -->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -63,26 +90,34 @@ if(!empty($_POST['corro_electronico']) && !empty($_POST['clave'])) {
 
     <!-- Custom styles Sweetalert2 for this template-->
 
-    <link rel="stylesheet" href="sweetalert2.min.css">
-    <link rel="stylesheet" href="sweetalert2.css">
+    <link rel="stylesheet" href="../css/sweetalert2.min.css">
+    <link rel="stylesheet" href="../css/sweetalert2.css">
+    
 
   
 
       <!-- Custom styles for this template-->
     <link href="../css/sb-admin-2.css" rel="stylesheet">
 
- 
+
 </head>
+
+
+
+
+
+
+
 <body class="bg-gradient-primary">
-  <div class="container">
+  <div class="container-fluid col-lg-12 login-cambios">
     <!-- Outer Row -->
     <div class="row justify-content-center">
       <div class="col-xl-10 col-lg-12 col-md-9">
         <div class="card o-hidden border-0 shadow-lg my-5">
           <div class="card-body p-0">
             <!-- Nested Row within Card Body -->
-            <div class="row">
-              <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+            <div class="row">                     <!--CAMBIOS bg-login-image-ciro-2023-->
+              <div class="col-lg-6 d-none d-lg-block bg-login-image-ciro-2023"></div>
               <div class="col-lg-6">
                 <div class="p-5">
                   <div class="text-center">
@@ -96,13 +131,18 @@ if(!empty($_POST['corro_electronico']) && !empty($_POST['clave'])) {
                       </div>
 
                   <?php endif; ?>
+
                     <div class="form-group">
-                      <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Ingrese su correo electrónico..." name="corro_electronico">
+                      <label for="exampleUserName align-center">USUARIO</label>
+                      <input type="text" class="form-control form-control-user" id="exampleUserName" aria-describedby="emailHelp" placeholder="Ingrese su nombre..." name="username">
                     </div>
+
                     <div class="form-group">
-                      <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Contraseña" name="clave">
+                      <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Contraseña" name="password">
                     </div>
+
                     <button type="submit" class="btn btn-primary btn-user btn-block"> Iniciar sesión </button>
+
                   </form>
                   <hr>
                   <div class="text-center">
@@ -119,7 +159,13 @@ if(!empty($_POST['corro_electronico']) && !empty($_POST['clave'])) {
       </div>
     </div>
   </div>
-  
+
+
+
+
+
+
+
    <!--Bootstrap 3-5-2023--> 
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
@@ -135,9 +181,7 @@ if(!empty($_POST['corro_electronico']) && !empty($_POST['clave'])) {
 
     <!--Sweetalert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="sweetalert2.all.min.js"></script>
+    <script src="../js/sweetalert2.all.min.js"></script>
     
-
- 
 </body>
 </html>

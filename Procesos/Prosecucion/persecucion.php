@@ -24,8 +24,8 @@
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="../../css/ebn.css" rel="stylesheet">
-   <!-- <link href="../../css/sb-admin-2.css" rel="stylesheet">-->
+     
+    <link href="../../css/sb-admin-2.css" rel="stylesheet"> 
 
     <!-- 24/5/2023 -->
 

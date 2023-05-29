@@ -80,7 +80,7 @@ $(document).ready(function() {
       // Enviar los datos del formulario a la base de datos utilizando AJAX
       $.ajax({
         type: 'POST',
-        url: './basedata/db.php',
+        url: '../../basedata/basedata1.php',
         data: $('#myForm').serialize(), // Obtener los datos del formulario
         success: function(response) {
           // Mostrar mensaje de éxito

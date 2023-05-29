@@ -10853,11 +10853,20 @@ a:focus {
     height: calc(20rem - 43px) !important;
   }
 }
-
-.bg-login-image {
-  background: url("https://source.unsplash.com/K4mSJ7kc0As/600x800");
+      /*CIRO 2023 bg-login-image
+/*.bg-login-image {
+  background: url("img/login_ciro.jpeg");
   background-position: center;
   background-size: cover;
+}
+*/
+
+.bg-login-image-ciro-2023{
+  
+  background: url("img/login_ciro.jpeg");
+  background-position: center;
+  background-size: cover;
+
 }
 
 .bg-register-image {

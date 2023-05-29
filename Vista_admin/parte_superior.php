@@ -25,16 +25,9 @@
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="../../css/ebn.css" rel="stylesheet">
+    <link href="../css/sb-admin-2.css" rel="stylesheet">
  
-    <!-- 24/5/2023 -->
-
-    <link rel="stylesheet" type="text/css"href="../../vendor/datatables/datatables.min.css">
-
-    <!-- 24/5/2023 -->
-
-    <link rel="stylesheet" href="../../vendor/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
-  
+    
 
 </head>
 

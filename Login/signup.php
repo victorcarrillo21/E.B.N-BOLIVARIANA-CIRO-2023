@@ -48,7 +48,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/sb-admin-2.css">
-    <link rel="stylesheet" href="css/sb-admin-2min.css">
+    <link rel="stylesheet" href="../../css/sb-admin-2min.css">
     <title>Registro</title>
 </head>
 <body>
