@@ -19,6 +19,9 @@ if (isset($datos->id_select) && isset($datos->value_select)) { // Verifica que l
     } else if ($id_select === "municipio_select") {
         $tabla = "municipios";
         $id_tabla = "id_municipio";
+    } else if ($id_select === "ciudad_select") {
+        $tabla = "ciudades";
+        $id_tabla = "id_ciudad";
     } else if ($id_select === "parroquia_select") {
         $tabla = "parroquias";
         $id_tabla = "id_parroquia";

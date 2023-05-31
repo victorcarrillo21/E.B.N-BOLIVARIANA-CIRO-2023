@@ -1,45 +1,3 @@
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
 // Get form data
 /*
 $nombre = $_POST['nombre'];
@@ -88,5 +46,5 @@ try {
 } catch(PDOException $e) {
     echo "Error al guardar los datos en la base de datos: " . $e->getMessage();
 }
-+/
+
 ?>

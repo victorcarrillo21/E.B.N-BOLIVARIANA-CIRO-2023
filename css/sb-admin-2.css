@@ -10,7 +10,7 @@
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
-:root {
+ :root {
   --blue: #4e73df;
   --indigo: #6610f2;
   --purple: #6f42c1;
@@ -267,7 +267,7 @@ select {
   word-wrap: normal;
 }
 
- 
+
 
 button:not(:disabled),
 [type="button"]:not(:disabled),
@@ -3547,7 +3547,7 @@ input[type="button"].btn-block {
   display: block;
   min-height: 1.5rem;
   padding-left: 1.5rem;
-   
+  
 }
 
 .custom-control-inline {
@@ -10853,20 +10853,11 @@ a:focus {
     height: calc(20rem - 43px) !important;
   }
 }
-      /*CIRO 2023 bg-login-image
-/*.bg-login-image {
-  background: url("img/login_ciro.jpeg");
+
+.bg-login-image {
+  background: url("https://source.unsplash.com/K4mSJ7kc0As/600x800");
   background-position: center;
   background-size: cover;
-}
-*/
-
-.bg-login-image-ciro-2023{
-  
-  background: url("img/login_ciro.jpeg");
-  background-position: center;
-  background-size: cover;
-
 }
 
 .bg-register-image {

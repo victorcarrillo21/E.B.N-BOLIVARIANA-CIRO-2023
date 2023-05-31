@@ -24,7 +24,7 @@
 
     <!-- Custom styles for this template-->
  
- <link href="../../css/sb-admin-2.css" rel="stylesheet"> 
+ <link href="css/sb-admin-2.css" rel="stylesheet"> 
  
 </head>
 
@@ -75,6 +75,8 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">DATOS:</h6>
+                        <a class="collapse-item" href="representante.php">Alumno</a>
+                        <a class="collapse-item" href="alumno.php">Representante</a>
                         <a class="collapse-item" href="representante.php">Alumno</a>
                         <a class="collapse-item" href="alumno.php">Representante</a>
                      

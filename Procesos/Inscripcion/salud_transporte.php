@@ -9,7 +9,7 @@ $message = '';
 // LAS VARIABLES QUÉ USAN ANGEL SON sql4 para insert y prepare sql4
 
 if(!empty($_POST['alergia'])) {
-    $conn_pdo = "INSERT INTO salud_alumno ( alergia, dieta, tratamiento_M, condicion_fisica, atencion_especial) 
+    $conn_pdo = "INSERT INTO salud_alumno ( alergia, dieta, tratamiento_M, condicion_fisica, atencion_especial,id_alumno, id_salud) 
     VALUES (:alergia, :dieta, :tratamiento_M, :condicion_fisica, :atencion_especial)";
     $stmt = $conn->prepare($conn_pdo);
     if (!$stmt) {
@@ -59,14 +59,7 @@ if(!empty($_POST['alergia'])) {
  
      <link href="../../css/sb-admin-2.css" rel="stylesheet"> 
 
-    <!-- 24/5/2023 -->
-
-    <link rel="stylesheet" type="text/css"href="../../vendor/datatables/datatables.min.css">
-
-    <!-- 24/5/2023 -->
-
-    <link rel="stylesheet" href="../../vendor/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
-  
+     
 
 </head>
 
@@ -399,8 +392,7 @@ if(!empty($_POST['alergia'])) {
     <script src="../../js/sb-admin-2.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script type="text/javascript" src="../../vendor/datatables/datatables.min.js"></script>    
-   
+  
 
 </body>
 

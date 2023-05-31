@@ -29,14 +29,14 @@ select_all.forEach(select=>{
       
       
         
-        /*  data.forEach(function(ciudad) {
+     data.forEach(function(ciudad) {
         var option = document.createElement("option");
         option.value = ciudad.id_ciudad;
         option.text = ciudad.ciudad;
         // aquí puedes agregar el option a un select o a cualquier otro elemento HTML
         select_ciudad.disabled=false
         select_ciudad.appendChild(option)
-        });*/
+        });
         
     
     

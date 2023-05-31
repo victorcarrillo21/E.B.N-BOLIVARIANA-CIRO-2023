@@ -16,10 +16,13 @@ try {
     $municipios = $conn_pdo->query("SELECT id_municipio, id_estado, municipio FROM municipios"); 
     $parroquias = $conn_pdo->query("SELECT id_parroquia ,id_municipio, parroquia FROM parroquias");
 
+
+    $conn_pdo->query("SET NAMES 'utf8'");
+
     // Verificación del envío de formulario
     if (!empty($_POST)) {
     $message = '';
-
+    
     // Asignar valores de los campos a las variables correspondientes
     $nombre = $_POST['nombre'];
     $apellido = $_POST['apellido'];

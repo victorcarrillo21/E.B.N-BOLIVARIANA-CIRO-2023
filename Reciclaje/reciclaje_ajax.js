@@ -338,3 +338,23 @@ function enviarDatos(datos) {
                        //13-5-2023
 
 /*Ambos códigos son prácticas comunes para crear un formulario con modal y enviar datos a un servidor. Utilizan eventos para obtener los valores del formulario, mostrarlos en el modal y enviarlos al servidor. La principal diferencia radica en la forma en que se obtienen los valores de los campos del formulario. Ambos son válidos y la elección depende del contexto y las preferencias del programador.*/
+
+
+
+
+// window.location.href = 'otra_pagina.php';
+
+
+ 
+    //Validar que el campo de cédula tenga dígitos
+   /* var cedula = $('input[name="cedula"]').val();
+    if (cedula.length !== 0) {
+      alert('La cédula debe tener 0 dígitos');
+      return;
+    }
+
+    //Validar que el campo de período escolar sea un número positivo
+    var periodo_escolar = $('input[name="periodo_escolar"]').val();
+    if (periodo_escolar <= 0) {
+      alert('El período escolar debe ser un número positivo');
+      return;*/

@@ -133,12 +133,12 @@
                   <?php endif; ?>
 
                     <div class="form-group">
-                      <label for="exampleUserName align-center">USUARIO</label>
-                      <input type="text" class="form-control form-control-user" id="exampleUserName" aria-describedby="emailHelp" placeholder="Ingrese su nombre..." name="username">
+                      <label for="exampleUserName  align-content-center">USUARIO</label>  
+                      <input type="text" class="form-control  form-control-user" id="exampleUserName" aria-describedby="emailHelp" placeholder="Ingrese su nombre..." name="username">
                     </div>
 
-                    <div class="form-group">
-                      <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Contraseña" name="password">
+                    <div class="form-group">   
+                      <input type="password" class="form-control  form-control-user" id="exampleInputPassword" placeholder="Contraseña" name="password">
                     </div>
 
                     <button type="submit" class="btn btn-primary btn-user btn-block"> Iniciar sesión </button>

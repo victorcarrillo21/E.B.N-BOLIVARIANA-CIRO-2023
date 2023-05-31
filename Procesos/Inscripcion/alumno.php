@@ -177,7 +177,9 @@
         require_once "../../basedata/basedata1.php";
 
 if ($conn_pdo) {
-  $sql = "INSERT INTO alumno (nombre, apellido, cedula, genero, fecha_nac, lugar_nac, direccion, periodo_escolar, id_estado, id_ciudad, id_municipio, id_parroquia, id_procedencia, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+  $sql = ("INSERT INTO alumno (nombre, apellido, genero, fecha_nac, lugar_nac, direccion, periodo_escolar, id_estado, id_ciudad, id_municipio, id_parroquia, procedencia, status) VALUES (:nombre, :apellido, :genero, :fecha_nac, :lugar_nac, :direccion, :periodo_escolar, :id_estado, :id_ciudad, :id_municipio, :id_parroquia, :id_procedencia, :status)");
+
+
 
   // Verifica que el nombre no está vacío
   if (isset($_POST['nombre']) && !empty($_POST['nombre'])) {
@@ -229,7 +231,7 @@ if ($conn_pdo) {
       echo "El valor en id_procedencia no existe en la tabla procedencia.";
     }
   } else { // Si el nombre está vacío o no está definido, muestra un mensaje de error
-    echo "El nombre del alumno es obligatorio.";
+    //echo "El nombre del alumno es obligatorio.";
   }
 } else {
   echo "Error al conectar a la base de datos.";
@@ -287,139 +289,134 @@ if ($conn_pdo) {
 
     <h1 class="text-center mb-5">Registro de datos</h1>
 
-    <form action="guardar_datos.php" method="POST">
-  
-<div class="mb-3">
-  <label for="nombre" class="form-label">Nombre:</label>
-  <input type="text" name="nombre" id="nombre" class="form-control" required maxlength="50">
-</div>
+    <form id="myForm2">
+  <!-- Sección de identidad del usuario -->
+  <fieldset>
+    <legend>Identidad del usuario</legend>
+    <div class="mb-3">
+      <label for="nombre" class="form-label">Nombre:</label>
+      <input type="text" name="nombre" id="nombre" class="form-control" required maxlength="50">
+    </div>
+    <div class="mb-3">
+      <label for="apellido" class="form-label">Apellido:</label>
+      <input type="text" name="apellido" id="apellido" class="form-control" required maxlength="50">
+    </div>
+    <div class="mb-3">
+      <label for="cedula" class="form-label">Cédula:</label>
+      <input type="number" name="cedula" id="cedula" class="form-control" required>
+    </div>
+    <div class="mb-3">
+      <label for="genero" class="form-label">Género:</label>
+      <select name="genero" id="genero" class="form-select" required>
+        <option value="">Seleccione una opción</option>
+        <option value="masculino">Masculino</option>
+        <option value="femenino">Femenino</option>
+      </select>
+    </div>
+    <div class="w-25 mb-3">
+      <label for="fecha_nac" class="form-label">Fecha de nacimiento:</label>
+      <input type="date" name="fecha_nac" id="fecha_nac" class="form-control" required>
+    </div>
+    <div class="mb-3">
+      <label for="lugar_nac" class="form-label">Lugar de nacimiento:</label>
+      <input type="text" name="lugar_nac" id="lugar_nac" class="form-control" required>
+    </div>
+  </fieldset>
 
-<div class="mb-3">
-  <label for="apellido" class="form-label">Apellido:</label>
-  <input type="text" name="apellido" id="apellido" class="form-control" required maxlength="50">
-</div>
-         
-  <div class="mb-3">
-    <label for="cedula" class="form-label">Cédula:</label>
-    <input type="number" name="cedula" id="cedula" class="form-control" required>
-  </div>
+  <!-- Sección de ubicación del usuario -->
+  <fieldset>
+    <legend>Ubicación del usuario</legend>
+    <div class="form-group">
+      <label for="state" class="form-label">Estado:</label>
+      <select name="estado" id="state" class="form-select" required> 
+        <option value="">Seleccione una opción</option>
+        <?php 
+          $stmt = $conn_pdo->query('SELECT * FROM estados');
+          if ($stmt) {
+            foreach ($stmt as $row) {
+              echo '<option value="' . $row['id_estado'] . '">' . $row['estado'] . '</option>';
+            }
+          }
+        ?>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="ciudad_select" class="form-label">Ciudad:</label>
+      <select name="ciudad" id="ciudad_select" class="form-select" required>
+        <option value="">Seleccione una opción</option>
+        <?php 
+          $stmt = $conn_pdo->query('SELECT * FROM ciudades');
+          if ($stmt) {
+            foreach ($stmt as $row) {
+              echo '<option value="' . $row['id_ciudad'] . '">' . $row['ciudad'] . '</option>';
+            }
+          }
+        ?>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="municipio_select" class="form-label">Municipio:</label>
+      <select name="municipio" id="municipio_select" class="form-select" required>
+        <option value="">Seleccione una opción</option>
+        <?php 
+          $stmt = $conn_pdo->query('SELECT * FROM municipios');
+          if ($stmt) {
+            foreach ($stmt as $row) {
+              echo '<option value="' . $row['id_municipio'] . '">' . $row['municipio'] . '</option>';
+            }
+          }
+        ?>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="parroquia_select"class="form-label">Parroquia:</label>
+      <select name="parroquia" id="parroquia_select" class="form-select">
+        <option value="">Seleccione una opción</option>
+        <?php 
+          $stmt = $conn_pdo->query('SELECT * FROM parroquias');
+          if ($stmt) {
+            foreach ($stmt as $row) {
+              echo '<option value="' . $row['id_parroquia'] . '">' . $row['parroquia'] . '</option>';
+            }
+          }
+        ?>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="direccion" class="form-label">Dirección:</label>
+      <textarea name="direccion" id="direccion" class="form-control" required></textarea>
+    </div>
+  </fieldset>
 
-  <div class="mb-3">
-    <label for="genero" class="form-label">Género:</label>
-    <select name="genero" id="genero" class="form-select" required>
-      <option value="">Seleccione una opción</option>
-      <option value="masculino">Masculino</option>
-      <option value="femenino">Femenino</option>
-    </select>
-  </div>
+  <!-- Sección de información adicional -->
+  <fieldset>
+    <legend>Información adicional</legend>
+    <div class="mb-3">
+      <label for="periodo_escolar" class="form-label">Período escolar:</label>
+      <input type="number" name="periodo_escolar" id="periodo_escolar" class="form-control" required>
+    </div>
+    <div class="mb-3">
+      <label for="id_procedencia" class="form-label">Procedencia:</label>
+     <input type="text" name="procedencia" id="id_procedencia" class="form-control" required>
+    </div>
+    <div class="mb-3">
+      <label for="status" class="form-label">Estado:</label>
+      <div class="btn-group" role="group" aria-label="Estado">
+        <input type="radio" class="btn-check" name="status" id="success-outlined" value="success" autocomplete="off" checked>
+        <label class="btn btn-outline-success" for="success-outlined">Activo</label>
+        <input type="radio" class="btn-check" name="status" id="danger-outlined" value="danger" autocomplete="off">
+        <label class="btn btn-outline-danger" for="danger-outlined">Inactivo</label>
+      </div>
+    </div>
+  </fieldset>
 
-  <div class="w-25 mb-3">
-    <label for="fecha_nac" class="form-label">Fecha de nacimiento:</label>
-    <input type="date" name="fecha_nac" id="fecha_nac" class="form-control" required>
-  </div>
-
-  <div class="mb-3">
-    <label for="lugar_nac" class="form-label">Lugar de nacimiento:</label>
-    <input type="text" name="lugar_nac" id="lugar_nac" class="form-control" required>
-  </div>
-
-  <div class="mb-3">
-    <label for="direccion" class="form-label">Dirección:</label>
-    <textarea name="direccion" id="direccion" class="form-control" required></textarea>
-  </div>
-
-  <div class="mb-3">
-    <label for="periodo_escolar" class="form-label">Período escolar:</label>
-    <input type="number" name="periodo_escolar" id="periodo_escolar" class="form-control" required>
-  </div>
-
-  <div class="form-group">
-        <label for="i"></label>
-
-
-
-
-  </div>
-
-  <!-- INICIO DEL SELECT DINAMICO, RECUERDAD QUÉ EL SELECT PRINCIPAL ES ESTADO LUEGO CIUDAD -->
-<?php require_once '../../basedata/basedata1.php'; ?>
-
-<div class="form-group">
-  <label for="estados">Estado:</label>
-  <select name="estado" id="state" data-state="state" class="form-select select_representante" required> 
-    <option value="">Seleccione una opción</option>
-    <?php 
-      $stmt = $conn_pdo->query('SELECT * FROM estados');
-      if ($stmt) {
-        foreach ($stmt as $row) {
-          echo '<option value="' . $row['id_estado'] . '">' . $row['estado'] . '</option>';
-        }
-      }
-    ?>
-  </select>
-</div>
-
-<div class="form-group">
-  <label for="ciudad_select">Ciudad:</label>
-  <select name="ciudad" id="ciudad_select" class="form-select select_representante" required disabled>
-    <option value="0">eliga la ciudad</option>
-   
-  </select>
-</div>
-
-<div class="form-group">
-  <label for="municipio">Municipio:</label>
-  <select name="municipio" id="municipio_select" class="form-select select_representante" required>
-    <option value="">Seleccione una opción</option>
-    <?php 
-      $stmt = $conn_pdo->query('SELECT * FROM municipios');
-      if ($stmt) {
-        foreach ($stmt as $row) {
-          echo '<option value="' . $row['id_municipio'] . '">' . $row['municipio'] . '</option>';
-        }
-      }
-    ?>
-  </select>
-</div>
-
-<div class="form-group">
-  <label for="parroquia">Parroquia:</label>
-  <select name="parroquia" id="parroquia_select" class="form-select select_representante">
-    <option value="">Seleccione una opción</option>
-    <?php 
-      $stmt = $conn_pdo->query('SELECT * FROM parroquias');
-      if ($stmt) {
-        foreach ($stmt as $row) {
-          echo '<option value="' . $row['id_parroquia'] . '">' . $row['parroquia'] . '</option>';
-        }
-      }
-    ?>
-  </select>
-</div>
-
-  <div class="mb-3">
-    <label for="id_procedencia" class="form-label">ID de procedencia:</label>
-    <input type="number" name="id_procedencia" id="id_procedencia" class="form-control" required>
-  </div>
-
- <div class="mb-3">
-  <label for="status" class="form-label">Estado:</label>
-
-  <div class="btn-group" role="group" aria-label="Estado">
-    <input type="radio" class="btn-check" name="status" id="success-outlined" value="success" autocomplete="off" checked>
-    <label class="btn btn-outline-success" for="success-outlined">Activo</label>
-
-    <input type="radio" class="btn-check" name="status" id="danger-outlined" value="danger" autocomplete="off">
-    <label class="btn btn-outline-danger" for="danger-outlined">Inactivo</label>
-  </div>
-</div>
-
-  <button type="submit" class="btn btn-primary vh-1">Guardar</button>
+  <!-- Botón de envío -->
+  <button type="submit" class="btn btn-primary" value="Guardar" name="Guardar" id="submitBtn">Guardar</button>
 </form>
  
 
 
-
+    
 <script src="../../app.js"></script>
 
 
@@ -470,7 +467,7 @@ if ($conn_pdo) {
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
+     <!-- Bootstrap core JavaScript-->
    <!--Bootstrap 3-5-2023--> <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
    <script src="../../vendor/jquery/jquery.min.js"></script>
@@ -482,8 +479,10 @@ if ($conn_pdo) {
     <!-- Custom scripts for all pages-->
     <script src="../../js/sb-admin-2.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ 
 
-    <script type="text/javascript" src="../../vendor/datatables/datatables.min.js"></script>    
+    <script src="../../modal_alumno.js"></script>
+       
    
 
 </body>

@@ -27,7 +27,7 @@ $(document).ready(function() {
 
     
     
-    // Crear una cadena de texto con los valores de los camposdel formulario
+    // Crear una cadena de texto con los valores de los campos del formulario
     var modalContent = '<p><strong>Nombre:</strong> ' + nombre + '</p>' +
                         '<p><strong>Apellido:</strong> ' + apellido + '</p>' +
                         '<p><strong>Cédula:</strong> ' + cedula + '</p>' +
