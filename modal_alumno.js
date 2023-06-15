@@ -77,6 +77,9 @@ $(document).ready(function() {
           parroquia: parroquia,
           procedencia: procedencia,
           status: status
+
+
+          
         },
         success: function(response) {
           // Mostrar un mensaje de éxito o redireccionar a otra página
@@ -87,6 +90,25 @@ $(document).ready(function() {
           alert('Ocurrió un error al guardar los datos: ' + jqXHR.responseText);
         }
       });
+
+  // Mostrar los datos que se enviarán en la solicitud AJAX
+  alert(JSON.stringify({
+  nombre: nombre,
+  apellido: apellido,
+  cedula: cedula,
+  genero: genero,
+  fecha_nac: fecha_nac,
+  lugar_nac: lugar_nac,
+  direccion: direccion,
+  estado: estado,
+  ciudad: ciudad,
+  municipio: municipio,
+  parroquia: parroquia,
+  procedencia: procedencia,
+  status: status
+}));
+
+
 
       // Cerrar el modal
       $('#myModal').modal('hide');

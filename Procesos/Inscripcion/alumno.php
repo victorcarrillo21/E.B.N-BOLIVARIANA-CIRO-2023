@@ -24,6 +24,7 @@
     
    <link href="../../css/sb-admin-2.css" rel="stylesheet"> 
 
+ 
    
   
 
@@ -173,8 +174,30 @@
                 
 <?php
 
+require_once "../../basedata/basedata2.php";
 
-        require_once "../../basedata/basedata1.php";
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "basededatos_ciroo";
+
+  try {
+    $conn_pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password);
+    $conn_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "Conexión exitosa<br>";
+  } catch(PDOException $e) {
+    echo "Error al conectar a la base de datos: " . $e->getMessage();
+  }
+
+
+if (isset($conn_pdo)) {
+  // Código para establecer la conexión y ejecutar la consulta
+} else {
+  echo "Error al conectar a la base de datos.";
+}
+
+
+
 
 if ($conn_pdo) {
   $sql = ("INSERT INTO alumno (nombre, apellido, genero, fecha_nac, lugar_nac, direccion, periodo_escolar, id_estado, id_ciudad, id_municipio, id_parroquia, procedencia, status) VALUES (:nombre, :apellido, :genero, :fecha_nac, :lugar_nac, :direccion, :periodo_escolar, :id_estado, :id_ciudad, :id_municipio, :id_parroquia, :id_procedencia, :status)");
@@ -195,20 +218,21 @@ if ($conn_pdo) {
 
   // Vincular los valores de las variables a los marcadores de posición en la consulta SQL
   
-  $stmt->bindParam(1, $nombre);
-  $stmt->bindParam(2, $apellido);
-  $stmt->bindParam(3, $cedula);
-  $stmt->bindParam(4, $genero);
-  $stmt->bindParam(5, $fecha_nac);
-  $stmt->bindParam(6, $lugar_nac);
-  $stmt->bindParam(7, $direccion);
-  $stmt->bindParam(8, $periodo_escolar);
-  $stmt->bindParam(9, $id_estado);
-  $stmt->bindParam(10, $id_ciudad);
-  $stmt->bindParam(11, $id_municipio);
-  $stmt->bindParam(12, $id_parroquia);
-  $stmt->bindParam(13, $id_procedencia);
-  $stmt->bindParam(14, $status);
+ 
+  $stmt->bindParam(':nombre', $nombre);
+  $stmt->bindParam(':apellido', $apellido);
+  $stmt->bindParam(':genero', $genero);
+  $stmt->bindParam(':fecha_nac', $fecha_nac);
+  $stmt->bindParam(':lugar_nac', $lugar_nac);
+  $stmt->bindParam(':direccion', $direccion);
+  $stmt->bindParam(':periodo_escolar', $periodo_escolar);
+  $stmt->bindParam(':id_estado', $id_estado);
+  $stmt->bindParam(':id_ciudad', $id_ciudad);
+  $stmt->bindParam(':id_municipio', $id_municipio);
+  $stmt->bindParam(':id_parroquia', $id_parroquia);
+  $stmt->bindParam(':id_procedencia', $id_procedencia);
+  $stmt->bindParam(':status', $status);
+
 
   if (!empty($_POST['nombre'])) {
     $nombre = $_POST['nombre'];
@@ -236,7 +260,7 @@ if ($conn_pdo) {
 } else {
   echo "Error al conectar a la base de datos.";
 }
- 
+ /*
   if (isset($_POST['nombre'])) {
     $nombre = $_POST['nombre'];
   }
@@ -280,7 +304,7 @@ if ($conn_pdo) {
     $status = $_POST['status'];
   }
 
-  
+  */
 ?>
                 
                 <?php if(!empty($message)): ?>
@@ -294,19 +318,19 @@ if ($conn_pdo) {
   <fieldset>
     <legend>Identidad del usuario</legend>
     <div class="mb-3">
-      <label for="nombre" class="form-label">Nombre:</label>
+      <label for="nombre_nuevo" class="form-label">Nombre:</label>
       <input type="text" name="nombre" id="nombre" class="form-control" required maxlength="50">
     </div>
     <div class="mb-3">
       <label for="apellido" class="form-label">Apellido:</label>
-      <input type="text" name="apellido" id="apellido" class="form-control" required maxlength="50">
+      <input type="text_nuevo" name="apellido" id="apellido" class="form-control" required maxlength="50">
     </div>
     <div class="mb-3">
-      <label for="cedula" class="form-label">Cédula:</label>
+      <label for="cedula_nuevo" class="form-label">Cédula:</label>
       <input type="number" name="cedula" id="cedula" class="form-control" required>
     </div>
     <div class="mb-3">
-      <label for="genero" class="form-label">Género:</label>
+      <label for="genero_nuevo" class="form-label">Género:</label>
       <select name="genero" id="genero" class="form-select" required>
         <option value="">Seleccione una opción</option>
         <option value="masculino">Masculino</option>
@@ -314,11 +338,11 @@ if ($conn_pdo) {
       </select>
     </div>
     <div class="w-25 mb-3">
-      <label for="fecha_nac" class="form-label">Fecha de nacimiento:</label>
+      <label for="fecha_nac_nuevo" class="form-label">Fecha de nacimiento:</label>
       <input type="date" name="fecha_nac" id="fecha_nac" class="form-control" required>
     </div>
     <div class="mb-3">
-      <label for="lugar_nac" class="form-label">Lugar de nacimiento:</label>
+      <label for="lugar_nac_nuevo" class="form-label">Lugar de nacimiento:</label>
       <input type="text" name="lugar_nac" id="lugar_nac" class="form-control" required>
     </div>
   </fieldset>
@@ -468,8 +492,8 @@ if ($conn_pdo) {
     </div>
 
      <!-- Bootstrap core JavaScript-->
-   <!--Bootstrap 3-5-2023--> <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
+   <!--Bootstrap 3-5-2023--> <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        -->
    <script src="../../vendor/jquery/jquery.min.js"></script>
    <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -478,7 +502,7 @@ if ($conn_pdo) {
 
     <!-- Custom scripts for all pages-->
     <script src="../../js/sb-admin-2.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
  
 
     <script src="../../modal_alumno.js"></script>

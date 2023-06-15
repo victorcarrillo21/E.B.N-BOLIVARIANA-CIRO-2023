@@ -1,0 +1,16 @@
+{
+    "name": "victor/poo",
+    "description": "proceso",
+    "autoload": {
+        "psr-4": {
+            "Victor\\Poo\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "victorcarrillo21",
+            "email": "victorxvictor102@gmail.com"
+        }
+    ],
+    "require": {}
+}
