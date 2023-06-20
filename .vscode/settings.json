@@ -1,0 +1,11 @@
+{
+    "code-runner.clearPreviousOutput": false,
+    "php.executablePath": "",
+    "php.files.exclude": [
+
+
+        
+        
+    ],
+    "php.debug.executablePath": ""
+}

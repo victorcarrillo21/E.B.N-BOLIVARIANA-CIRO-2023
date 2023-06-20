@@ -1,0 +1,19 @@
+{
+    "name": "ciro/bolivariana",
+    "description": "proyecto",
+    "type": "project",
+    "require": {
+        "nesbot/carbon": "^2.67"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ciro\\Bolivariana\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "victorcarrillo21",
+            "email": "victorxvictor102@gmail.com"
+        }
+    ]
+}

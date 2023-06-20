@@ -1,6 +1,6 @@
 <?php 
         
-        include_once "alumno.php"    
+        include_once "alumno.php" ;  
         $estatus = mysqli_query($mysqli, "SELECT id_estado, estado FROM estados"); 
         $ciudad = mysqli_query($mysqli, "SELECT id_ciudad, id_estado, ciudad FROM ciudades"); 
         $municipio = mysqli_query($mysqli, "SELECT id_municipio, id_estado, municipio FROM municipios"); 
@@ -34,7 +34,7 @@
                 $message = 'lo siento no se pudo registrar por un error';
             }   
         }
-    
+        }
     ?>
 
 
@@ -50,3 +50,4 @@
     <!-- Custom scripts for all pages-->
     <script src="../../js/sb-admin-2.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    

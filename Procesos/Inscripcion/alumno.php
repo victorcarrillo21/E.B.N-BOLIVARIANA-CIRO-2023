@@ -347,6 +347,9 @@ if ($conn_pdo) {
     </div>
   </fieldset>
 
+  <?php
+  require_once "../../direccion.php";
+  ?>
   <!-- Sección de ubicación del usuario -->
   <fieldset>
     <legend>Ubicación del usuario</legend>
@@ -354,56 +357,39 @@ if ($conn_pdo) {
       <label for="state" class="form-label">Estado:</label>
       <select name="estado" id="state" class="form-select" required> 
         <option value="">Seleccione una opción</option>
-        <?php 
-          $stmt = $conn_pdo->query('SELECT * FROM estados');
-          if ($stmt) {
-            foreach ($stmt as $row) {
-              echo '<option value="' . $row['id_estado'] . '">' . $row['estado'] . '</option>';
-            }
-          }
-        ?>
+        <?php
+                $ubicacion->getEstados();
+            ?>
       </select>
     </div>
     <div class="form-group">
       <label for="ciudad_select" class="form-label">Ciudad:</label>
       <select name="ciudad" id="ciudad_select" class="form-select" required>
         <option value="">Seleccione una opción</option>
-        <?php 
-          $stmt = $conn_pdo->query('SELECT * FROM ciudades');
-          if ($stmt) {
-            foreach ($stmt as $row) {
-              echo '<option value="' . $row['id_ciudad'] . '">' . $row['ciudad'] . '</option>';
-            }
-          }
-        ?>
+        <?php
+            $ubicacion->getCiudades();
+       ?>
       </select>
     </div>
     <div class="form-group">
       <label for="municipio_select" class="form-label">Municipio:</label>
       <select name="municipio" id="municipio_select" class="form-select" required>
         <option value="">Seleccione una opción</option>
-        <?php 
-          $stmt = $conn_pdo->query('SELECT * FROM municipios');
-          if ($stmt) {
-            foreach ($stmt as $row) {
-              echo '<option value="' . $row['id_municipio'] . '">' . $row['municipio'] . '</option>';
-            }
-          }
-        ?>
+        <?php
+                $ubicacion->getMunicipios();
+            ?>
+
       </select>
     </div>
     <div class="form-group">
       <label for="parroquia_select"class="form-label">Parroquia:</label>
       <select name="parroquia" id="parroquia_select" class="form-select">
         <option value="">Seleccione una opción</option>
-        <?php 
-          $stmt = $conn_pdo->query('SELECT * FROM parroquias');
-          if ($stmt) {
-            foreach ($stmt as $row) {
-              echo '<option value="' . $row['id_parroquia'] . '">' . $row['parroquia'] . '</option>';
-            }
-          }
-        ?>
+        <?php
+
+                $ubicacion->getParroquias();
+         ?>
+
       </select>
     </div>
     <div class="mb-3">

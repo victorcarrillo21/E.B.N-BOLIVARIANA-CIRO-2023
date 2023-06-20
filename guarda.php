@@ -4,8 +4,7 @@
 
 
 
-
-
+/*
 
 require_once "basedata/db.php";
 
@@ -26,7 +25,7 @@ if($conn_pdo->query("$sql"){
 
 
 
-<?php/* while($row_sqlco=$sqlform->fetch_assoc()){ ?>
+  while($row_sqlco=$sqlform->fetch_assoc()){ ?>
     <tr>
         <td><?$row_sqlco['id']; ?></td>
         <td><?$row_sqlco['id']; ?></td>
